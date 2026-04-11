@@ -1,0 +1,89 @@
+{
+  "created_at": "2026-04-11",
+  "filtering_summary": {
+    "original_total": 450,
+    "code_only": 260,
+    "documentation": 190,
+    "exclusion_rate": "42.2%",
+    "retention_rate": "57.8%",
+    "excluded_reasons": {
+      "other_web_exploitdb": 188,
+      "non_code_github_snippets": 2
+    }
+  },
+  "code_only_statistics": {
+    "total": 260,
+    "by_language": {
+      "php": 17,
+      "ruby": 41,
+      "python": 108,
+      "java": 79,
+      "js": 5,
+      "perl": 8,
+      "go": 1,
+      "unknown": 1
+    },
+    "by_vulnerability": {
+      "sql_injection": 25,
+      "file_upload": 25,
+      "command_injection": 44,
+      "path_traversal": 30,
+      "other_injection": 33,
+      "auth_bypass": 31,
+      "xxe": 19,
+      "ssrf": 5,
+      "xss": 8,
+      "rce": 34,
+      "csrf": 6
+    },
+    "by_severity": {
+      "critical": 103,
+      "high": 118,
+      "medium": 39
+    },
+    "by_source": {
+      "dvwa": 14,
+      "exploitdb": 159,
+      "owasp_benchmark": 20,
+      "webgoat": 59,
+      "github_issues": 8
+    }
+  },
+  "documentation_statistics": {
+    "total": 190,
+    "source": "exploitdb + github_issues",
+    "format_distribution": {
+      "txt": 183,
+      "unknown": 2,
+      "html": 5
+    },
+    "by_vulnerability": {
+      "sql_injection": 66,
+      "other_injection": 6,
+      "xss": 66,
+      "auth_bypass": 28,
+      "command_injection": 2,
+      "rce": 5,
+      "file_upload": 12,
+      "path_traversal": 2,
+      "csrf": 2,
+      "xxe": 1
+    }
+  },
+  "integrity_check": {
+    "code_plus_doc_equals_original": true,
+    "all_vuln_types_in_code": [
+      "auth_bypass",
+      "command_injection",
+      "csrf",
+      "file_upload",
+      "other_injection",
+      "path_traversal",
+      "rce",
+      "sql_injection",
+      "ssrf",
+      "xss",
+      "xxe"
+    ]
+  }
+}
