@@ -1,0 +1,33 @@
+{
+  "created_at": "2026-04-11",
+  "language_coverage": {
+    "php": 22,
+    "other_web": 200,
+    "unknown": 3,
+    "ruby": 44,
+    "python": 112,
+    "java": 119,
+    "js": 5,
+    "perl": 9,
+    "go": 1
+  },
+  "training": {
+    "php": 17,
+    "other_web": 188,
+    "unknown": 3,
+    "ruby": 41,
+    "python": 108,
+    "java": 79,
+    "js": 5,
+    "perl": 8,
+    "go": 1
+  },
+  "evaluation": {
+    "php": 5,
+    "java": 40,
+    "other_web": 12,
+    "python": 4,
+    "ruby": 3,
+    "perl": 1
+  }
+}

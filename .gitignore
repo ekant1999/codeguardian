@@ -55,7 +55,7 @@ data/raw/github_issues/*.json
 data/raw/owasp/*.json
 data/raw/code_examples/*.json
 data/raw/security_advisories/
-data/processed/
+# data/processed/ — intentionally NOT excluded (committed for team use)
 data/metadata/
 # v2 is intentionally NOT excluded — committed for team use
 

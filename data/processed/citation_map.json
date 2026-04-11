@@ -1,0 +1,622 @@
+{
+  "version": "1.0",
+  "created_at": "2026-04-11",
+  "description": "Static citation mapping for vulnerability types — CWE, OWASP, and CVE references",
+  "vulnerability_types": {
+    "auth_bypass": {
+      "cwe": {
+        "id": "CWE-287",
+        "name": "Improper Authentication",
+        "url": "https://cwe.mitre.org/data/definitions/287.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A07:2021 – Identification and Authentication Failures",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+        "key_points": [
+          "Enforce authentication on every protected endpoint",
+          "Use strong, well-reviewed authentication libraries",
+          "Implement multi-factor authentication for sensitive actions",
+          "Use short-lived, properly signed session tokens",
+          "Validate authorization on the server — never trust client-side checks"
+        ],
+        "summary": "Authentication bypass vulnerabilities allow attackers to access protected resources without valid credentials. Common causes include flawed logic, weak session management, insecure direct object references, and missing authorization checks."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2023-22651",
+          "description": "Improper Privilege Management vulnerability in SUSE Rancher allows Privilege Escalation. A failure in the update logic of Rancher's admission Webhook may lead to\n the misconfiguration of the Webhook. ",
+          "severity": "CRITICAL",
+          "cvss_score": 9.9,
+          "cwe_ids": [
+            "CWE-269",
+            "CWE-276"
+          ]
+        },
+        {
+          "id": "CVE-2020-15098",
+          "description": "In TYPO3 CMS greater than or equal to 9.0.0 and less than 9.5.20, and greater than or equal to 10.0.0 and less than 10.4.6, it has been discovered that an internal verification mechanism can be used t",
+          "severity": "HIGH",
+          "cvss_score": 8.8,
+          "cwe_ids": [
+            "CWE-20",
+            "CWE-200",
+            "CWE-325",
+            "CWE-502",
+            "CWE-327"
+          ]
+        },
+        {
+          "id": "CVE-2020-24034",
+          "description": "Sagemcom F@ST 5280 routers using firmware version 1.150.61 have insecure deserialization that allows any authenticated user to perform a privilege escalation to any other user. By making a request wit",
+          "severity": "HIGH",
+          "cvss_score": 8.8,
+          "cwe_ids": [
+            "CWE-502"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 15% of web applications; #7 in OWASP Top 10 2021",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "command_injection": {
+      "cwe": {
+        "id": "CWE-78",
+        "name": "Improper Neutralization of Special Elements in OS Command",
+        "url": "https://cwe.mitre.org/data/definitions/78.html"
+      },
+      "severity": "CRITICAL",
+      "owasp": {
+        "category": "A03:2021 – Injection",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html",
+        "key_points": [
+          "Avoid calling OS commands with user input entirely",
+          "Use language-native APIs instead of shell commands",
+          "If shell calls are unavoidable, use allowlist input validation",
+          "Escape all special shell characters",
+          "Run processes with least privilege"
+        ],
+        "summary": "int main(int argc, char **argv) {\n char cat[] = \"cat \";\n char *command;\n size_t commandLength;"
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2024-30247",
+          "description": "NextcloudPi is a ready to use image for Virtual Machines, Raspberry Pi, Odroid HC1, Rock64 and other boards. A command injection vulnerability in NextCloudPi allows command execution as the root user ",
+          "severity": "CRITICAL",
+          "cvss_score": 10.0,
+          "cwe_ids": [
+            "CWE-78",
+            "CWE-78"
+          ]
+        },
+        {
+          "id": "CVE-2003-1487",
+          "description": "Multiple \"command injection\" vulnerabilities in Phorum 3.4 through 3.4.2 allow remote attackers to execute arbitrary commands and modify the Phorum configuration files via the (1) UserAdmin program, (",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": [
+            "CWE-20"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "High severity; found in 8% of applications",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "csrf": {
+      "cwe": {
+        "id": "CWE-352",
+        "name": "Cross-Site Request Forgery",
+        "url": "https://cwe.mitre.org/data/definitions/352.html"
+      },
+      "severity": "MEDIUM",
+      "owasp": {
+        "category": "A01:2021 – Broken Access Control",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Use synchronizer token pattern (anti-CSRF tokens)",
+          "Use SameSite cookie attribute (Strict or Lax)",
+          "Verify Origin and Referer headers for state-changing requests",
+          "Require re-authentication for sensitive operations"
+        ],
+        "summary": "// Create the CSRF Token\nmessage = sessionID.length + \"!\" + sessionID + \"!\" + randomValue.length + \"!\" + randomValue.toHex() // HMAC message payload\nhmac = hmac(\"SHA256\", secret, message) // Generate the HMAC hash\n// Add the `randomValue` to the HMAC hash to create the final CSRF token.\n// Avoid using the `message` because it contains the sessionID in plain text,\n// which the server already stores separately.\ncsrfToken = hmac.toHex() + \".\" + randomValue.toHex()"
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2020-10057",
+          "description": "GeniXCMS 1.1.7 is vulnerable to user privilege escalation due to broken access control. This issue exists because of an incomplete fix for CVE-2015-2680, in which \"token\" is used as a CSRF protection ",
+          "severity": "HIGH",
+          "cvss_score": 8.8,
+          "cwe_ids": [
+            "CWE-352"
+          ]
+        },
+        {
+          "id": "CVE-2017-9413",
+          "description": "Multiple cross-site request forgery (CSRF) vulnerabilities in the Podcast feature in Subsonic 6.1.1 allow remote attackers to hijack the authentication of users for requests that (1) subscribe to a po",
+          "severity": "HIGH",
+          "cvss_score": 8.8,
+          "cwe_ids": [
+            "CWE-352"
+          ]
+        },
+        {
+          "id": "CVE-2020-25015",
+          "description": "A specific router allows changing the Wi-Fi password remotely. Genexis Platinum 4410 V2-1.28, a compact router generally used at homes and offices was found to be vulnerable to Broken Access Control a",
+          "severity": "MEDIUM",
+          "cvss_score": 6.5,
+          "cwe_ids": [
+            "CWE-352"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Declining due to SameSite cookies; still common in legacy apps",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "deserialization": {
+      "cwe": {
+        "id": "CWE-502",
+        "name": "Deserialization of Untrusted Data",
+        "url": "https://cwe.mitre.org/data/definitions/502.html"
+      },
+      "severity": "CRITICAL",
+      "owasp": {
+        "category": "A08:2021 – Software and Data Integrity Failures",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html",
+        "key_points": [
+          "Never deserialize data from untrusted sources",
+          "Implement integrity checks such as digital signatures",
+          "Use allowlists to restrict deserializable class types",
+          "Run deserialization code in isolated low-privilege environments",
+          "Monitor and log deserialization exceptions and failures"
+        ],
+        "summary": "Insecure deserialization occurs when applications deserialize data from untrusted sources without validation, allowing attackers to manipulate serialized objects to achieve remote code execution or privilege escalation."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2018-0147",
+          "description": "A vulnerability in Java deserialization used by Cisco Secure Access Control System (ACS) prior to release 5.8 patch 9 could allow an unauthenticated, remote attacker to execute arbitrary commands on a",
+          "severity": "CRITICAL",
+          "cvss_score": 9.8,
+          "cwe_ids": [
+            "CWE-20",
+            "CWE-502"
+          ]
+        },
+        {
+          "id": "CVE-2018-3784",
+          "description": "A code injection in cryo 0.0.6 allows an attacker to arbitrarily execute code due to insecure implementation of deserialization.",
+          "severity": "CRITICAL",
+          "cvss_score": 9.8,
+          "cwe_ids": [
+            "CWE-94",
+            "CWE-94",
+            "CWE-502"
+          ]
+        },
+        {
+          "id": "CVE-2018-15691",
+          "description": "Insecure deserialization of a specially crafted serialized object, in CA Release Automation 6.5 and earlier, allows attackers to potentially execute arbitrary code.",
+          "severity": "CRITICAL",
+          "cvss_score": 9.8,
+          "cwe_ids": [
+            "CWE-502"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 10% of applications; declining due to framework mitigations",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "file_upload": {
+      "cwe": {
+        "id": "CWE-434",
+        "name": "Unrestricted Upload of File with Dangerous Type",
+        "url": "https://cwe.mitre.org/data/definitions/434.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A04:2021 – Insecure Design",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+        "key_points": [
+          "Validate file type by content (magic bytes), not just extension",
+          "Rename uploaded files to random names on the server",
+          "Store uploaded files outside the web root",
+          "Limit file size and enforce quota limits",
+          "Scan uploads with an antivirus/malware scanner"
+        ],
+        "summary": "Unrestricted file upload enables attackers to upload malicious files (e.g., web shells) to the server. If the uploaded file is accessible and executable, it can lead to remote code execution, server compromise, and data exfiltration."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2002-0554",
+          "description": "webdriver in IBM Informix Web DataBlade 4.12 allows remote attackers to bypass user access levels or read arbitrary files via a SQL injection attack in an HTTP request.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2004-2749",
+          "description": "Directory traversal vulnerability in wra/public/wralogin in 2Wire Gateway, possibly as used in HomePortal and other product lines, allows remote attackers to read arbitrary files via a .. (dot dot) in",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": [
+            "CWE-22"
+          ]
+        },
+        {
+          "id": "CVE-2005-2095",
+          "description": "options_identities.php in SquirrelMail 1.4.4 and earlier uses the extract function to process the $_POST variable, which allows remote attackers to modify or read the preferences of other users, condu",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 15% of applications accepting file uploads",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "other_injection": {
+      "cwe": {
+        "id": "CWE-74",
+        "name": "Improper Neutralization of Special Elements in Output",
+        "url": "https://cwe.mitre.org/data/definitions/74.html"
+      },
+      "severity": "MEDIUM",
+      "owasp": {
+        "category": "A03:2021 – Injection",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Validate and sanitize all user-supplied input",
+          "Use parameterized APIs instead of string concatenation",
+          "Apply output encoding appropriate to the context",
+          "Implement allowlists rather than denylists for input validation"
+        ],
+        "summary": "Injection flaws occur when untrusted data is sent to an interpreter as part of a command or query. Beyond SQL and OS command injection, this category includes LDAP, XPath, and template injection vulnerabilities."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2000-1233",
+          "description": "SQL injection vulnerability in read.php3 and other scripts in Phorum 3.0.7 allows remote attackers to execute arbitrary SQL queries via the sSQL parameter.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2000-1236",
+          "description": "SQL injection vulnerability in mod_sql in Oracle Internet Application Server (IAS) 3.0.7 and earlier allows remote attackers to execute arbitrary SQL commands via the query string of the URL.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2001-1348",
+          "description": "TWIG 2.6.2 and earlier allows remote attackers to perform unauthorized database operations via a SQL injection attack on the id parameter.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        }
+      ],
+      "statistics": {
+        "prevalence": "Broad category; varies by injection subtype",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "path_traversal": {
+      "cwe": {
+        "id": "CWE-22",
+        "name": "Improper Limitation of a Pathname to a Restricted Directory",
+        "url": "https://cwe.mitre.org/data/definitions/22.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A01:2021 – Broken Access Control",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html",
+        "key_points": [
+          "Canonicalize paths and verify they start with the expected base directory",
+          "Reject paths containing '../' or encoded equivalents",
+          "Use an allowlist of permitted file extensions",
+          "Run the application with minimal filesystem permissions"
+        ],
+        "summary": "Path traversal vulnerabilities allow attackers to access files and directories outside the intended root by manipulating file path inputs with sequences like '../'. This can expose sensitive configuration files, credentials, and source code."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2004-2749",
+          "description": "Directory traversal vulnerability in wra/public/wralogin in 2Wire Gateway, possibly as used in HomePortal and other product lines, allows remote attackers to read arbitrary files via a .. (dot dot) in",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": [
+            "CWE-22"
+          ]
+        },
+        {
+          "id": "CVE-2005-3156",
+          "description": "Directory traversal vulnerability in printfaq.php in EasyGuppy (Guppy for Windows) 4.5.4 and 4.5.5 allows remote attackers to read arbitrary files via \"..\" sequences in the pg parameter, which is clea",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2006-1762",
+          "description": "Directory traversal vulnerability in index.php in blur6ex 0.3.452 allows remote attackers to include arbitrary files via the shard parameter.  NOTE: this issue can be exploited to produce resultant XS",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 12% of web applications",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "rce": {
+      "cwe": {
+        "id": "CWE-94",
+        "name": "Improper Control of Generation of Code",
+        "url": "https://cwe.mitre.org/data/definitions/94.html"
+      },
+      "severity": "CRITICAL",
+      "owasp": {
+        "category": "A03:2021 – Injection",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html",
+        "key_points": [
+          "Avoid executing user-supplied code or commands",
+          "Sandbox code execution in isolated environments",
+          "Apply strict input validation and allowlists",
+          "Keep all interpreters and runtimes patched and up to date"
+        ],
+        "summary": "Remote Code Execution allows attackers to run arbitrary code on the target server, often resulting from deserialization, template injection, or command injection vulnerabilities. RCE is the most severe class of web vulnerability."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2025-54253",
+          "description": "Adobe Experience Manager versions 6.5.23 and earlier are affected by a Misconfiguration vulnerability that could result in arbitrary code execution. An attacker could leverage this vulnerability to by",
+          "severity": "CRITICAL",
+          "cvss_score": 10.0,
+          "cwe_ids": [
+            "CWE-863"
+          ]
+        },
+        {
+          "id": "CVE-2019-18364",
+          "description": "In JetBrains TeamCity before 2019.1.4, insecure Java Deserialization could potentially allow remote code execution.",
+          "severity": "CRITICAL",
+          "cvss_score": 9.8,
+          "cwe_ids": [
+            "CWE-502"
+          ]
+        },
+        {
+          "id": "CVE-2019-18956",
+          "description": "Divisa Proxia Suite 9 < 9.12.16, 9.11.19, 9.10.26, 9.9.8, 9.8.43 and 9.7.10, 10.0 < 10.0.32, and 10.1 < 10.1.5, SparkSpace 1.0 < 1.0.30, 1.1 < 1.1.2, and 1.2 < 1.2.4, and Proxia PHR 1.0 < 1.0.30 and 1",
+          "severity": "CRITICAL",
+          "cvss_score": 9.8,
+          "cwe_ids": [
+            "CWE-502"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Less common but highest severity; often chained from other vulns",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "sql_injection": {
+      "cwe": {
+        "id": "CWE-89",
+        "name": "Improper Neutralization of Special Elements in SQL Command",
+        "url": "https://cwe.mitre.org/data/definitions/89.html"
+      },
+      "severity": "CRITICAL",
+      "owasp": {
+        "category": "A03:2021 – Injection",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Use prepared statements with parameterized queries",
+          "Use stored procedures with proper parameterization",
+          "Validate and escape all user-supplied input",
+          "Apply principle of least privilege on database accounts",
+          "Disable detailed database error messages in production"
+        ],
+        "summary": "• SQL Injection into a Numeric parameter\n Example: SELECT * from table where id = 123\nExploitation of SQL Injection vulnerabilities is divided into\nclasses according to the DBMS type and injection conditions.\n• A vulnerable request can get into Insert, Update, Delete, etc.\n Example: UPDATE users SET pass = '1' where user = 't1' OR 1=1--'\nBlind SQL Injection\nExample: select * from table where id = 1 AND if((ascii(lower(substring((select user()),$i,1))))!=$s,1,benchmark(200000,md5(now())))\nSLEEP(5"
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2000-1233",
+          "description": "SQL injection vulnerability in read.php3 and other scripts in Phorum 3.0.7 allows remote attackers to execute arbitrary SQL queries via the sSQL parameter.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2000-1236",
+          "description": "SQL injection vulnerability in mod_sql in Oracle Internet Application Server (IAS) 3.0.7 and earlier allows remote attackers to execute arbitrary SQL commands via the query string of the URL.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2001-1348",
+          "description": "TWIG 2.6.2 and earlier allows remote attackers to perform unauthorized database operations via a SQL injection attack on the id parameter.",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 23% of web applications; ranked #3 in OWASP Top 10 2021",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "ssrf": {
+      "cwe": {
+        "id": "CWE-918",
+        "name": "Server-Side Request Forgery",
+        "url": "https://cwe.mitre.org/data/definitions/918.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A10:2021 – Server-Side Request Forgery",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Use an allowlist of permitted domains/IPs",
+          "Disable HTTP redirects for outbound requests",
+          "Block requests to private IP ranges and loopback addresses",
+          "Validate and sanitize all user-supplied URLs",
+          "Segment network access so the server cannot reach internal services unnecessarily"
+        ],
+        "summary": "Server-Side Request Forgery allows attackers to induce the server to make HTTP requests to unintended targets, including internal services behind firewalls. This can be used to access cloud metadata endpoints, internal APIs, and sensitive infrastructure."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2013-0235",
+          "description": "The XMLRPC API in WordPress before 3.5.1 allows remote attackers to send HTTP requests to intranet servers, and conduct port-scanning attacks, by specifying a crafted source URL for a pingback, relate",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2013-2199",
+          "description": "The HTTP API in WordPress before 3.5.2 allows remote attackers to send HTTP requests to intranet servers via unspecified vectors, related to a Server-Side Request Forgery (SSRF) issue, a similar vulne",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": [
+            "CWE-264"
+          ]
+        },
+        {
+          "id": "CVE-2014-5297",
+          "description": "The actionSendErrorReport method in protected/controllers/SiteController.php in X2Engine 2.8 through 4.1.7 allows remote attackers to conduct PHP object injection and Server-Side Request Forgery (SSRF",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": [
+            "CWE-94"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Newly ranked OWASP Top 10 2021 #10; increasing with cloud adoption",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "xss": {
+      "cwe": {
+        "id": "CWE-79",
+        "name": "Improper Neutralization of Input During Web Page Generation",
+        "url": "https://cwe.mitre.org/data/definitions/79.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A03:2021 – Injection",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Escape all untrusted data before inserting into HTML output",
+          "Use a Content Security Policy (CSP) header",
+          "Validate and sanitize input server-side",
+          "Use modern frameworks with built-in XSS protection",
+          "Avoid innerHTML; use textContent or safe DOM APIs"
+        ],
+        "summary": "Cross-Site Scripting (XSS) allows attackers to inject malicious scripts into web pages viewed by other users. The injected code executes in the victim's browser, enabling session hijacking, credential theft, and malware delivery. It is the most prevalent web application security flaw."
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2001-1402",
+          "description": "Bugzilla before 2.14 does not properly escape untrusted parameters, which could allow remote attackers to conduct unauthorized activities via cross-site scripting (CSS) and possibly SQL injection atta",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-2002-0187",
+          "description": "Cross-site scripting vulnerability in the SQLXML component of Microsoft SQL Server 2000 allows an attacker to execute arbitrary script via the root parameter as part of an XML SQL query, aka \"Script I",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        },
+        {
+          "id": "CVE-1999-1357",
+          "description": "Netscape Communicator 4.04 through 4.7 (and possibly other versions) in various UNIX operating systems converts the 0x8b character to a \"<\" sign, and the 0x9b character to a \">\" sign, which could allo",
+          "severity": "UNKNOWN",
+          "cvss_score": 0.0,
+          "cwe_ids": []
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 36% of web applications; most common web vulnerability",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    },
+    "xxe": {
+      "cwe": {
+        "id": "CWE-611",
+        "name": "Improper Restriction of XML External Entity Reference",
+        "url": "https://cwe.mitre.org/data/definitions/611.html"
+      },
+      "severity": "HIGH",
+      "owasp": {
+        "category": "A05:2021 – Security Misconfiguration",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html",
+        "key_points": [
+          "Disable external entity processing in all XML parsers",
+          "Use setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true)",
+          "Use less complex data formats such as JSON when possible",
+          "Patch or upgrade XML processors and libraries regularly"
+        ],
+        "summary": "isXML(xmldoc,parseroptions);\nLucee\n¶\nAs of Lucee 5.3.4.51 and later, you can disable support for XML external entities by adding the following to your Application.cfc:\nthis.xmlFeatures = {\n externalGeneralEntities: false,\n secure: true,\n disallowDoctypeDecl: true\n};\nSupport for external XML entities is disabled by default as of Lucee 5.4.2.10 and Lucee 6.0.0.514.\nJava\n¶\nSince most Java XML parsers have XXE enabled by default, this language is especially vulnerable to XXE attack, so you must expl"
+      },
+      "example_cves": [
+        {
+          "id": "CVE-2010-3322",
+          "description": "The XML parser in Splunk 4.0.0 through 4.1.4 allows remote authenticated users to obtain sensitive information and gain privileges via an XML External Entity (XXE) attack to unknown vectors.",
+          "severity": "HIGH",
+          "cvss_score": 8.8,
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        },
+        {
+          "id": "CVE-2005-1306",
+          "description": "The Adobe Reader control in Adobe Reader and Acrobat 7.0 and 7.0.1 allows remote attackers to determine the existence of files via Javascript containing XML script, aka the \"XML External Entity vulner",
+          "severity": "HIGH",
+          "cvss_score": 7.5,
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        },
+        {
+          "id": "CVE-2009-1699",
+          "description": "The XSL stylesheet implementation in WebKit in Apple Safari before 4.0, iPhone OS 1.0 through 2.2.1, and iPhone OS for iPod touch 1.1 through 2.2.1 does not properly handle XML external entities, whic",
+          "severity": "HIGH",
+          "cvss_score": 7.5,
+          "cwe_ids": [
+            "CWE-611"
+          ]
+        }
+      ],
+      "statistics": {
+        "prevalence": "Found in 18% of applications processing XML",
+        "attack_vector": "Network",
+        "typical_impact": "Data breach, unauthorized access, or server compromise"
+      }
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "created_at": "2026-04-11",
+  "total_items": 515,
+  "training_items": 450,
+  "evaluation_items": 65,
+  "by_source": {
+    "training": {
+      "dvwa": 14,
+      "exploitdb": 347,
+      "github_issues": 10,
+      "owasp_benchmark": 20,
+      "webgoat": 59
+    },
+    "evaluation": {
+      "dvwa": 5,
+      "webgoat": 10,
+      "owasp_benchmark": 30,
+      "exploitdb": 20
+    },
+    "total": {
+      "dvwa": 19,
+      "exploitdb": 367,
+      "github_issues": 10,
+      "owasp_benchmark": 50,
+      "webgoat": 69
+    }
+  },
+  "by_language": {
+    "training": {
+      "php": 17,
+      "other_web": 188,
+      "unknown": 3,
+      "ruby": 41,
+      "python": 108,
+      "java": 79,
+      "js": 5,
+      "perl": 8,
+      "go": 1
+    },
+    "evaluation": {
+      "php": 5,
+      "java": 40,
+      "other_web": 12,
+      "python": 4,
+      "ruby": 3,
+      "perl": 1
+    },
+    "total": {
+      "php": 22,
+      "other_web": 200,
+      "unknown": 3,
+      "ruby": 44,
+      "python": 112,
+      "java": 119,
+      "js": 5,
+      "perl": 9,
+      "go": 1
+    }
+  },
+  "by_severity": {
+    "training": {
+      "critical": 176,
+      "medium": 47,
+      "high": 227
+    },
+    "evaluation": {
+      "high": 34,
+      "critical": 20,
+      "medium": 11
+    }
+  },
+  "raw_source_counts": {
+    "dvwa_original": 19,
+    "webgoat_original": 69,
+    "exploitdb_original": 368,
+    "owasp_benchmark_original": 50,
+    "github_issues_original": 70,
+    "github_issues_with_code": 24,
+    "cves_available": 673,
+    "owasp_docs": 26
+  }
+}
