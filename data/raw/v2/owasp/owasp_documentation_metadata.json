@@ -1,0 +1,19 @@
+{
+  "collection_date": "2026-04-10T18:04:02.785734",
+  "total_documents": 26,
+  "type_breakdown": {
+    "cheat_sheet": 19,
+    "vulnerability": 3,
+    "attack": 4
+  },
+  "successful_collections": 26,
+  "cleaning_applied": {
+    "method": "html_parsing",
+    "navigation_menus_removed": true,
+    "table_of_contents_removed": true,
+    "related_articles_removed": true,
+    "successful_cleans": 26,
+    "success_rate": "100.0%",
+    "avg_size_reduction": "80.6%"
+  }
+}

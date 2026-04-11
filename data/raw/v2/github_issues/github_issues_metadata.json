@@ -1,0 +1,26 @@
+{
+  "collection_date": "2026-04-10T18:03:29.159403",
+  "total_issues": 70,
+  "repositories": [
+    "pallets/flask",
+    "psf/requests",
+    "sqlmapproject/sqlmap",
+    "axios/axios",
+    "encode/django-rest-framework",
+    "zaproxy/zaproxy",
+    "nodejs/node",
+    "lodash/lodash",
+    "expressjs/express",
+    "OWASP/CheatSheetSeries"
+  ],
+  "language_breakdown": {
+    "Python": 38,
+    "JavaScript": 17,
+    "Java": 15
+  },
+  "cleaning_applied": {
+    "code_extracted": true,
+    "spam_filtered": 3,
+    "issues_with_code": 24
+  }
+}

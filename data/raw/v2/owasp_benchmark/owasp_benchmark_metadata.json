@@ -1,0 +1,14 @@
+{
+  "collection_date": "2026-04-10T18:04:16.792653",
+  "total_examples": 50,
+  "language_breakdown": {
+    "Java": 50
+  },
+  "source_breakdown": {
+    "OWASP Benchmark": 50
+  },
+  "cleaning_applied": {
+    "license_headers_removed": true,
+    "package_declarations_removed": true
+  }
+}

